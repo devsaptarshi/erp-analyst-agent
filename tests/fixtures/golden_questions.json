@@ -1,0 +1,2087 @@
+[
+  {
+    "id": "simple-00-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many suppliers does Acme Leather Co have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM suppliers WHERE tenant_id = %s",
+    "expected_result": 7,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-00-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many suppliers does Riverbend Hides Ltd have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM suppliers WHERE tenant_id = %s",
+    "expected_result": 7,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-00-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many suppliers does Summit Tanning Works have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM suppliers WHERE tenant_id = %s",
+    "expected_result": 7,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-01-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many customers does Acme Leather Co have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM customers WHERE tenant_id = %s",
+    "expected_result": 6,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-01-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many customers does Riverbend Hides Ltd have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM customers WHERE tenant_id = %s",
+    "expected_result": 7,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-01-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many customers does Summit Tanning Works have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM customers WHERE tenant_id = %s",
+    "expected_result": 5,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-02-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many plants does Acme Leather Co operate?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM plants WHERE tenant_id = %s",
+    "expected_result": 2,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-02-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many plants does Riverbend Hides Ltd operate?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM plants WHERE tenant_id = %s",
+    "expected_result": 2,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-02-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many plants does Summit Tanning Works operate?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM plants WHERE tenant_id = %s",
+    "expected_result": 1,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-03-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many products does Acme Leather Co make?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM products WHERE tenant_id = %s",
+    "expected_result": 8,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-03-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many products does Riverbend Hides Ltd make?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM products WHERE tenant_id = %s",
+    "expected_result": 6,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-03-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many products does Summit Tanning Works make?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM products WHERE tenant_id = %s",
+    "expected_result": 7,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-04-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many raw materials does Acme Leather Co track?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM materials WHERE tenant_id = %s",
+    "expected_result": 6,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-04-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many raw materials does Riverbend Hides Ltd track?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM materials WHERE tenant_id = %s",
+    "expected_result": 6,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-04-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many raw materials does Summit Tanning Works track?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM materials WHERE tenant_id = %s",
+    "expected_result": 6,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-05-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many purchase orders are currently open for Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM purchase_orders WHERE tenant_id = %s AND status = 'open'",
+    "expected_result": 5,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-05-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many purchase orders are currently open for Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM purchase_orders WHERE tenant_id = %s AND status = 'open'",
+    "expected_result": 4,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-05-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many purchase orders are currently open for Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM purchase_orders WHERE tenant_id = %s AND status = 'open'",
+    "expected_result": 0,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-06-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many employees work at Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM employees WHERE tenant_id = %s",
+    "expected_result": 11,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-06-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many employees work at Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM employees WHERE tenant_id = %s",
+    "expected_result": 8,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-06-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many employees work at Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM employees WHERE tenant_id = %s",
+    "expected_result": 5,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-07-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many warehouses does Acme Leather Co have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM warehouses WHERE tenant_id = %s",
+    "expected_result": 3,
+    "notes": "single-table count/lookup",
+    "held_out": false
+  },
+  {
+    "id": "simple-07-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many warehouses does Riverbend Hides Ltd have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM warehouses WHERE tenant_id = %s",
+    "expected_result": 2,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-07-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many warehouses does Summit Tanning Works have?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM warehouses WHERE tenant_id = %s",
+    "expected_result": 1,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-08-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many work orders are in progress for Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM work_orders WHERE tenant_id = %s AND status = 'in_progress'",
+    "expected_result": 7,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-08-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many work orders are in progress for Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM work_orders WHERE tenant_id = %s AND status = 'in_progress'",
+    "expected_result": 4,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-08-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many work orders are in progress for Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM work_orders WHERE tenant_id = %s AND status = 'in_progress'",
+    "expected_result": 7,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-09-Acme Leather Co",
+    "category": "simple_lookup",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many sales orders are open for Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM sales_orders WHERE tenant_id = %s AND status = 'open'",
+    "expected_result": 14,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-09-Riverbend Hides Ltd",
+    "category": "simple_lookup",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many sales orders are open for Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM sales_orders WHERE tenant_id = %s AND status = 'open'",
+    "expected_result": 18,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "simple-09-Summit Tanning Works",
+    "category": "simple_lookup",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many sales orders are open for Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM sales_orders WHERE tenant_id = %s AND status = 'open'",
+    "expected_result": 5,
+    "notes": "single-table count/lookup",
+    "held_out": true
+  },
+  {
+    "id": "metric-material_yield_pct-00",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "What is Acme Leather Co's overall material yield percentage?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(good_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "92.5",
+    "notes": "exercises the material_yield_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-material_yield_pct-01",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Can you tell me Riverbend Hides Ltd's material yield percentage?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(good_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "93.0",
+    "notes": "exercises the material_yield_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-material_yield_pct-02",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's the material yield percentage for Summit Tanning Works across all plants?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(good_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "92.2",
+    "notes": "exercises the material_yield_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-material_yield_pct-03",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Report Acme Leather Co's material yield percentage.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(good_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "92.5",
+    "notes": "exercises the material_yield_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-material_yield_pct-04",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Give me Riverbend Hides Ltd's current material yield percentage.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(good_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "93.0",
+    "notes": "exercises the material_yield_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-material_yield_pct-05",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What is Summit Tanning Works's material yield percentage based on all recorded data?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(good_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "92.2",
+    "notes": "exercises the material_yield_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-material_yield_pct-06",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Summarize Acme Leather Co's material yield percentage.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(good_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "92.5",
+    "notes": "exercises the material_yield_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-scrap_rate_pct-00",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "What is Acme Leather Co's overall scrap rate percentage?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(scrap_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "7.5",
+    "notes": "exercises the scrap_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-scrap_rate_pct-01",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Can you tell me Riverbend Hides Ltd's scrap rate percentage?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(scrap_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "7.0",
+    "notes": "exercises the scrap_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-scrap_rate_pct-02",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's the scrap rate percentage for Summit Tanning Works across all plants?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(scrap_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "7.8",
+    "notes": "exercises the scrap_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-scrap_rate_pct-03",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Report Acme Leather Co's scrap rate percentage.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(scrap_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "7.5",
+    "notes": "exercises the scrap_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-scrap_rate_pct-04",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Give me Riverbend Hides Ltd's current scrap rate percentage.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(scrap_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "7.0",
+    "notes": "exercises the scrap_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-scrap_rate_pct-05",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What is Summit Tanning Works's scrap rate percentage based on all recorded data?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(scrap_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "7.8",
+    "notes": "exercises the scrap_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-scrap_rate_pct-06",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Summarize Acme Leather Co's scrap rate percentage.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(scrap_output) / nullif(sum(qty_input), 0), 1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "7.5",
+    "notes": "exercises the scrap_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-revenue-00",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "What is Acme Leather Co's overall total revenue (excluding cancelled invoices)?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "1284379.00",
+    "notes": "exercises the revenue semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-revenue-01",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Can you tell me Riverbend Hides Ltd's total revenue (excluding cancelled invoices)?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "1418363.21",
+    "notes": "exercises the revenue semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-revenue-02",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's the total revenue (excluding cancelled invoices) for Summit Tanning Works across all plants?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "716051.27",
+    "notes": "exercises the revenue semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-revenue-03",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Report Acme Leather Co's total revenue (excluding cancelled invoices).",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "1284379.00",
+    "notes": "exercises the revenue semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-revenue-04",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Give me Riverbend Hides Ltd's current total revenue (excluding cancelled invoices).",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "1418363.21",
+    "notes": "exercises the revenue semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-revenue-05",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What is Summit Tanning Works's total revenue (excluding cancelled invoices) based on all recorded data?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "716051.27",
+    "notes": "exercises the revenue semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-revenue-06",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Summarize Acme Leather Co's total revenue (excluding cancelled invoices).",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "1284379.00",
+    "notes": "exercises the revenue semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-quality_pass_rate_pct-00",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "What is Acme Leather Co's overall quality pass rate?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * count(*) FILTER (WHERE result = 'pass') / nullif(count(*) FILTER (WHERE result IS NOT NULL), 0), 1) FROM quality_checks WHERE tenant_id = %s",
+    "expected_result": "90.8",
+    "notes": "exercises the quality_pass_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-quality_pass_rate_pct-01",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Can you tell me Riverbend Hides Ltd's quality pass rate?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * count(*) FILTER (WHERE result = 'pass') / nullif(count(*) FILTER (WHERE result IS NOT NULL), 0), 1) FROM quality_checks WHERE tenant_id = %s",
+    "expected_result": "92.3",
+    "notes": "exercises the quality_pass_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-quality_pass_rate_pct-02",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's the quality pass rate for Summit Tanning Works across all plants?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * count(*) FILTER (WHERE result = 'pass') / nullif(count(*) FILTER (WHERE result IS NOT NULL), 0), 1) FROM quality_checks WHERE tenant_id = %s",
+    "expected_result": "93.3",
+    "notes": "exercises the quality_pass_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-quality_pass_rate_pct-03",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Report Acme Leather Co's quality pass rate.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * count(*) FILTER (WHERE result = 'pass') / nullif(count(*) FILTER (WHERE result IS NOT NULL), 0), 1) FROM quality_checks WHERE tenant_id = %s",
+    "expected_result": "90.8",
+    "notes": "exercises the quality_pass_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-quality_pass_rate_pct-04",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Give me Riverbend Hides Ltd's current quality pass rate.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * count(*) FILTER (WHERE result = 'pass') / nullif(count(*) FILTER (WHERE result IS NOT NULL), 0), 1) FROM quality_checks WHERE tenant_id = %s",
+    "expected_result": "92.3",
+    "notes": "exercises the quality_pass_rate_pct semantic-layer metric definition",
+    "held_out": false
+  },
+  {
+    "id": "metric-quality_pass_rate_pct-05",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What is Summit Tanning Works's quality pass rate based on all recorded data?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * count(*) FILTER (WHERE result = 'pass') / nullif(count(*) FILTER (WHERE result IS NOT NULL), 0), 1) FROM quality_checks WHERE tenant_id = %s",
+    "expected_result": "93.3",
+    "notes": "exercises the quality_pass_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-quality_pass_rate_pct-06",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Summarize Acme Leather Co's quality pass rate.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * count(*) FILTER (WHERE result = 'pass') / nullif(count(*) FILTER (WHERE result IS NOT NULL), 0), 1) FROM quality_checks WHERE tenant_id = %s",
+    "expected_result": "90.8",
+    "notes": "exercises the quality_pass_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-purchase_fill_rate_pct-00",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "What is Acme Leather Co's overall purchase order fill rate?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(coalesce(r.total_received, 0)) / nullif(sum(pol.qty_ordered), 0), 1) FROM purchase_order_lines pol LEFT JOIN (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s",
+    "expected_result": "74.7",
+    "notes": "exercises the purchase_fill_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-purchase_fill_rate_pct-01",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Can you tell me Riverbend Hides Ltd's purchase order fill rate?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(coalesce(r.total_received, 0)) / nullif(sum(pol.qty_ordered), 0), 1) FROM purchase_order_lines pol LEFT JOIN (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s",
+    "expected_result": "82.4",
+    "notes": "exercises the purchase_fill_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-purchase_fill_rate_pct-02",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's the purchase order fill rate for Summit Tanning Works across all plants?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(coalesce(r.total_received, 0)) / nullif(sum(pol.qty_ordered), 0), 1) FROM purchase_order_lines pol LEFT JOIN (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s",
+    "expected_result": "89.8",
+    "notes": "exercises the purchase_fill_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-purchase_fill_rate_pct-03",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Report Acme Leather Co's purchase order fill rate.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(coalesce(r.total_received, 0)) / nullif(sum(pol.qty_ordered), 0), 1) FROM purchase_order_lines pol LEFT JOIN (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s",
+    "expected_result": "74.7",
+    "notes": "exercises the purchase_fill_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-purchase_fill_rate_pct-04",
+    "category": "metric_definition",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Give me Riverbend Hides Ltd's current purchase order fill rate.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(coalesce(r.total_received, 0)) / nullif(sum(pol.qty_ordered), 0), 1) FROM purchase_order_lines pol LEFT JOIN (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s",
+    "expected_result": "82.4",
+    "notes": "exercises the purchase_fill_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-purchase_fill_rate_pct-05",
+    "category": "metric_definition",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What is Summit Tanning Works's purchase order fill rate based on all recorded data?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(coalesce(r.total_received, 0)) / nullif(sum(pol.qty_ordered), 0), 1) FROM purchase_order_lines pol LEFT JOIN (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s",
+    "expected_result": "89.8",
+    "notes": "exercises the purchase_fill_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "metric-purchase_fill_rate_pct-06",
+    "category": "metric_definition",
+    "tenant_name": "Acme Leather Co",
+    "question": "Summarize Acme Leather Co's purchase order fill rate.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0 * sum(coalesce(r.total_received, 0)) / nullif(sum(pol.qty_ordered), 0), 1) FROM purchase_order_lines pol LEFT JOIN (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s",
+    "expected_result": "74.7",
+    "notes": "exercises the purchase_fill_rate_pct semantic-layer metric definition",
+    "held_out": true
+  },
+  {
+    "id": "join-00-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "Which supplier's material gave the worst yield for Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "\nWITH batch_supplier AS (\n    SELECT pb.good_output, pb.qty_input,\n        (SELECT po.supplier_id FROM goods_receipts gr\n         JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id\n         JOIN purchase_orders po ON po.id = pol.purchase_order_id\n         WHERE pol.material_id = bi.material_id AND gr.received_date <= pb.produced_date\n         ORDER BY gr.received_date DESC LIMIT 1) AS supplier_id\n    FROM production_batches pb JOIN batch_inputs bi ON bi.production_batch_id = pb.id\n    WHERE pb.tenant_id = %s\n)\nSELECT s.name, round(100.0 * sum(bs.good_output) / nullif(sum(bs.qty_input), 0), 1) AS yield_pct\nFROM batch_supplier bs JOIN suppliers s ON s.id = bs.supplier_id\nGROUP BY s.name ORDER BY yield_pct ASC LIMIT 1\n",
+    "expected_result": [
+      "Northline Hides",
+      "90.1"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-00-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Which supplier's material gave the worst yield for Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "\nWITH batch_supplier AS (\n    SELECT pb.good_output, pb.qty_input,\n        (SELECT po.supplier_id FROM goods_receipts gr\n         JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id\n         JOIN purchase_orders po ON po.id = pol.purchase_order_id\n         WHERE pol.material_id = bi.material_id AND gr.received_date <= pb.produced_date\n         ORDER BY gr.received_date DESC LIMIT 1) AS supplier_id\n    FROM production_batches pb JOIN batch_inputs bi ON bi.production_batch_id = pb.id\n    WHERE pb.tenant_id = %s\n)\nSELECT s.name, round(100.0 * sum(bs.good_output) / nullif(sum(bs.qty_input), 0), 1) AS yield_pct\nFROM batch_supplier bs JOIN suppliers s ON s.id = bs.supplier_id\nGROUP BY s.name ORDER BY yield_pct ASC LIMIT 1\n",
+    "expected_result": [
+      "Dyer-Odonnell Leather",
+      "91.9"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-00-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Which supplier's material gave the worst yield for Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "\nWITH batch_supplier AS (\n    SELECT pb.good_output, pb.qty_input,\n        (SELECT po.supplier_id FROM goods_receipts gr\n         JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id\n         JOIN purchase_orders po ON po.id = pol.purchase_order_id\n         WHERE pol.material_id = bi.material_id AND gr.received_date <= pb.produced_date\n         ORDER BY gr.received_date DESC LIMIT 1) AS supplier_id\n    FROM production_batches pb JOIN batch_inputs bi ON bi.production_batch_id = pb.id\n    WHERE pb.tenant_id = %s\n)\nSELECT s.name, round(100.0 * sum(bs.good_output) / nullif(sum(bs.qty_input), 0), 1) AS yield_pct\nFROM batch_supplier bs JOIN suppliers s ON s.id = bs.supplier_id\nGROUP BY s.name ORDER BY yield_pct ASC LIMIT 1\n",
+    "expected_result": [
+      "Elliott and Sons Hides",
+      "90.6"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-01-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "List the top 3 customers by total order value for Acme Leather Co.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT c.name, sum(sol.qty_ordered * sol.unit_price) AS total_value FROM sales_order_lines sol JOIN sales_orders so ON so.id = sol.sales_order_id JOIN customers c ON c.id = so.customer_id WHERE sol.tenant_id = %s GROUP BY c.name ORDER BY total_value DESC LIMIT 3",
+    "expected_result": [
+      {
+        "name": "James Inc",
+        "total_value": "409331.9306000"
+      },
+      {
+        "name": "Johnson LLC",
+        "total_value": "336451.5986000"
+      },
+      {
+        "name": "Underwood-Martinez",
+        "total_value": "323904.4054000"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-01-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "List the top 3 customers by total order value for Riverbend Hides Ltd.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT c.name, sum(sol.qty_ordered * sol.unit_price) AS total_value FROM sales_order_lines sol JOIN sales_orders so ON so.id = sol.sales_order_id JOIN customers c ON c.id = so.customer_id WHERE sol.tenant_id = %s GROUP BY c.name ORDER BY total_value DESC LIMIT 3",
+    "expected_result": [
+      {
+        "name": "Lewis-Ward",
+        "total_value": "462145.0154000"
+      },
+      {
+        "name": "Long, Thomas and Rodriguez",
+        "total_value": "341487.7199000"
+      },
+      {
+        "name": "Elliott-Ortega",
+        "total_value": "300726.5216000"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-01-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "List the top 3 customers by total order value for Summit Tanning Works.",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT c.name, sum(sol.qty_ordered * sol.unit_price) AS total_value FROM sales_order_lines sol JOIN sales_orders so ON so.id = sol.sales_order_id JOIN customers c ON c.id = so.customer_id WHERE sol.tenant_id = %s GROUP BY c.name ORDER BY total_value DESC LIMIT 3",
+    "expected_result": [
+      {
+        "name": "Mosley, Yates and Snyder",
+        "total_value": "305052.5977000"
+      },
+      {
+        "name": "Morris-Graham",
+        "total_value": "257092.6221000"
+      },
+      {
+        "name": "Colon LLC",
+        "total_value": "215515.6456000"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-02-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "Which supplier has Acme Leather Co's best purchase order fill rate?",
+    "behavior": "answer",
+    "ground_truth_sql": "WITH r AS (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) SELECT s.name, round(100.0 * sum(coalesce(r.total_received,0)) / nullif(sum(pol.qty_ordered),0), 1) AS fill_pct FROM purchase_order_lines pol JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id LEFT JOIN r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s GROUP BY s.name ORDER BY fill_pct DESC LIMIT 1",
+    "expected_result": [
+      "Northline Hides",
+      "89.0"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-02-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Which supplier has Riverbend Hides Ltd's best purchase order fill rate?",
+    "behavior": "answer",
+    "ground_truth_sql": "WITH r AS (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) SELECT s.name, round(100.0 * sum(coalesce(r.total_received,0)) / nullif(sum(pol.qty_ordered),0), 1) AS fill_pct FROM purchase_order_lines pol JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id LEFT JOIN r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s GROUP BY s.name ORDER BY fill_pct DESC LIMIT 1",
+    "expected_result": [
+      "Dyer-Odonnell Leather",
+      "95.2"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-02-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Which supplier has Summit Tanning Works's best purchase order fill rate?",
+    "behavior": "answer",
+    "ground_truth_sql": "WITH r AS (SELECT purchase_order_line_id, sum(qty_received) AS total_received FROM goods_receipts GROUP BY purchase_order_line_id) SELECT s.name, round(100.0 * sum(coalesce(r.total_received,0)) / nullif(sum(pol.qty_ordered),0), 1) AS fill_pct FROM purchase_order_lines pol JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id LEFT JOIN r ON r.purchase_order_line_id = pol.id WHERE pol.tenant_id = %s GROUP BY s.name ORDER BY fill_pct DESC LIMIT 1",
+    "expected_result": [
+      "Pitts LLC Supply",
+      "100.0"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-03-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "Which employee has inspected the most quality checks for Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT e.name, count(*) AS n FROM quality_checks qc JOIN employees e ON e.id = qc.inspector_employee_id WHERE qc.tenant_id = %s GROUP BY e.name ORDER BY n DESC LIMIT 1",
+    "expected_result": [
+      "Darryl Murphy",
+      16
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-03-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Which employee has inspected the most quality checks for Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT e.name, count(*) AS n FROM quality_checks qc JOIN employees e ON e.id = qc.inspector_employee_id WHERE qc.tenant_id = %s GROUP BY e.name ORDER BY n DESC LIMIT 1",
+    "expected_result": [
+      "Jill Curry",
+      18
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-03-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Which employee has inspected the most quality checks for Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT e.name, count(*) AS n FROM quality_checks qc JOIN employees e ON e.id = qc.inspector_employee_id WHERE qc.tenant_id = %s GROUP BY e.name ORDER BY n DESC LIMIT 1",
+    "expected_result": [
+      "Lynn Simmons",
+      12
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-04-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "What is the total quantity of goods received from each of Acme Leather Co's suppliers?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT s.name, sum(gr.qty_received) FROM goods_receipts gr JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id WHERE gr.tenant_id = %s GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Macias Ltd Hides",
+        "sum": "14404.290"
+      },
+      {
+        "name": "Miller LLC Hides",
+        "sum": "17961.890"
+      },
+      {
+        "name": "Miller-Waters Traders",
+        "sum": "11117.490"
+      },
+      {
+        "name": "Northline Hides",
+        "sum": "19345.300"
+      },
+      {
+        "name": "Payne Group Hides",
+        "sum": "14220.870"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-04-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What is the total quantity of goods received from each of Riverbend Hides Ltd's suppliers?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT s.name, sum(gr.qty_received) FROM goods_receipts gr JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id WHERE gr.tenant_id = %s GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Adams-Jackson Traders",
+        "sum": "29008.150"
+      },
+      {
+        "name": "Anderson Inc Hides",
+        "sum": "19180.310"
+      },
+      {
+        "name": "Campbell, Henry and Morales Supply",
+        "sum": "13049.960"
+      },
+      {
+        "name": "Dyer-Odonnell Leather",
+        "sum": "28932.710"
+      },
+      {
+        "name": "Jones, Gonzalez and Davies Leather",
+        "sum": "15403.420"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-04-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What is the total quantity of goods received from each of Summit Tanning Works's suppliers?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT s.name, sum(gr.qty_received) FROM goods_receipts gr JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id WHERE gr.tenant_id = %s GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Bauer, Reynolds and Bush Tanning",
+        "sum": "10039.720"
+      },
+      {
+        "name": "Brown-Davies Leather",
+        "sum": "21928.110"
+      },
+      {
+        "name": "Cooper and Sons Leather",
+        "sum": "10048.640"
+      },
+      {
+        "name": "Elliott and Sons Hides",
+        "sum": "16022.380"
+      },
+      {
+        "name": "Gutierrez Ltd Leather",
+        "sum": "8494.380"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-05-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "Which plant at Acme Leather Co has produced the most finished product by volume?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT pl.name, sum(pb.good_output) AS total FROM production_batches pb JOIN work_orders wo ON wo.id = pb.work_order_id JOIN plants pl ON pl.id = wo.plant_id WHERE pb.tenant_id = %s GROUP BY pl.name ORDER BY total DESC LIMIT 1",
+    "expected_result": [
+      "Acme Leather Co Plant - Kanpur",
+      "18265.390"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-05-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Which plant at Riverbend Hides Ltd has produced the most finished product by volume?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT pl.name, sum(pb.good_output) AS total FROM production_batches pb JOIN work_orders wo ON wo.id = pb.work_order_id JOIN plants pl ON pl.id = wo.plant_id WHERE pb.tenant_id = %s GROUP BY pl.name ORDER BY total DESC LIMIT 1",
+    "expected_result": [
+      "Riverbend Hides Ltd Plant - Kolkata",
+      "15651.110"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-05-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Which plant at Summit Tanning Works has produced the most finished product by volume?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT pl.name, sum(pb.good_output) AS total FROM production_batches pb JOIN work_orders wo ON wo.id = pb.work_order_id JOIN plants pl ON pl.id = wo.plant_id WHERE pb.tenant_id = %s GROUP BY pl.name ORDER BY total DESC LIMIT 1",
+    "expected_result": [
+      "Summit Tanning Works Plant - Agra",
+      "11331.630"
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-06-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many invoices has Acme Leather Co issued per customer region?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT c.region, count(*) FROM invoices i JOIN sales_orders so ON so.id = i.sales_order_id JOIN customers c ON c.id = so.customer_id WHERE i.tenant_id = %s GROUP BY c.region ORDER BY c.region",
+    "expected_result": [
+      "North",
+      9
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-06-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many invoices has Riverbend Hides Ltd issued per customer region?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT c.region, count(*) FROM invoices i JOIN sales_orders so ON so.id = i.sales_order_id JOIN customers c ON c.id = so.customer_id WHERE i.tenant_id = %s GROUP BY c.region ORDER BY c.region",
+    "expected_result": [
+      "East",
+      37
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-06-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many invoices has Summit Tanning Works issued per customer region?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT c.region, count(*) FROM invoices i JOIN sales_orders so ON so.id = i.sales_order_id JOIN customers c ON c.id = so.customer_id WHERE i.tenant_id = %s GROUP BY c.region ORDER BY c.region",
+    "expected_result": [
+      "East",
+      8
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-07-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "What is the average purchase order line value by supplier for Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT s.name, round(avg(pol.qty_ordered * pol.unit_price), 2) FROM purchase_order_lines pol JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id WHERE pol.tenant_id = %s GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Macias Ltd Hides",
+        "round": "38180.28"
+      },
+      {
+        "name": "Miller LLC Hides",
+        "round": "44724.97"
+      },
+      {
+        "name": "Miller-Waters Traders",
+        "round": "38397.86"
+      },
+      {
+        "name": "Northline Hides",
+        "round": "40870.20"
+      },
+      {
+        "name": "Payne Group Hides",
+        "round": "43404.56"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": false
+  },
+  {
+    "id": "join-07-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What is the average purchase order line value by supplier for Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT s.name, round(avg(pol.qty_ordered * pol.unit_price), 2) FROM purchase_order_lines pol JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id WHERE pol.tenant_id = %s GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Adams-Jackson Traders",
+        "round": "48830.02"
+      },
+      {
+        "name": "Anderson Inc Hides",
+        "round": "29539.07"
+      },
+      {
+        "name": "Campbell, Henry and Morales Supply",
+        "round": "36166.56"
+      },
+      {
+        "name": "Dyer-Odonnell Leather",
+        "round": "38922.36"
+      },
+      {
+        "name": "Jones, Gonzalez and Davies Leather",
+        "round": "49833.73"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "join-07-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What is the average purchase order line value by supplier for Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT s.name, round(avg(pol.qty_ordered * pol.unit_price), 2) FROM purchase_order_lines pol JOIN purchase_orders po ON po.id = pol.purchase_order_id JOIN suppliers s ON s.id = po.supplier_id WHERE pol.tenant_id = %s GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Bauer, Reynolds and Bush Tanning",
+        "round": "30174.19"
+      },
+      {
+        "name": "Brown-Davies Leather",
+        "round": "61329.98"
+      },
+      {
+        "name": "Cooper and Sons Leather",
+        "round": "45053.11"
+      },
+      {
+        "name": "Elliott and Sons Hides",
+        "round": "41329.37"
+      },
+      {
+        "name": "Gutierrez Ltd Leather",
+        "round": "47739.03"
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "join-08-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "Which product has been sold to the most distinct customers for Acme Leather Co?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT p.name, count(DISTINCT so.customer_id) AS n_customers FROM sales_order_lines sol JOIN sales_orders so ON so.id = sol.sales_order_id JOIN products p ON p.id = sol.product_id WHERE sol.tenant_id = %s GROUP BY p.name ORDER BY n_customers DESC LIMIT 1",
+    "expected_result": [
+      "Finished Deal Leather",
+      6
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "join-08-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Which product has been sold to the most distinct customers for Riverbend Hides Ltd?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT p.name, count(DISTINCT so.customer_id) AS n_customers FROM sales_order_lines sol JOIN sales_orders so ON so.id = sol.sales_order_id JOIN products p ON p.id = sol.product_id WHERE sol.tenant_id = %s GROUP BY p.name ORDER BY n_customers DESC LIMIT 1",
+    "expected_result": [
+      "Finished Audience Leather",
+      7
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "join-08-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Which product has been sold to the most distinct customers for Summit Tanning Works?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT p.name, count(DISTINCT so.customer_id) AS n_customers FROM sales_order_lines sol JOIN sales_orders so ON so.id = sol.sales_order_id JOIN products p ON p.id = sol.product_id WHERE sol.tenant_id = %s GROUP BY p.name ORDER BY n_customers DESC LIMIT 1",
+    "expected_result": [
+      "Finished Friend Leather",
+      5
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "join-09-Acme Leather Co",
+    "category": "multi_table_join",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many production batches used material supplied by each of Acme Leather Co's suppliers?",
+    "behavior": "answer",
+    "ground_truth_sql": "WITH batch_supplier AS (SELECT pb.id, (SELECT po.supplier_id FROM goods_receipts gr JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id JOIN purchase_orders po ON po.id = pol.purchase_order_id WHERE pol.material_id = bi.material_id AND gr.received_date <= pb.produced_date ORDER BY gr.received_date DESC LIMIT 1) AS supplier_id FROM production_batches pb JOIN batch_inputs bi ON bi.production_batch_id = pb.id WHERE pb.tenant_id = %s) SELECT s.name, count(*) FROM batch_supplier bs JOIN suppliers s ON s.id = bs.supplier_id GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Macias Ltd Hides",
+        "count": 22
+      },
+      {
+        "name": "Miller LLC Hides",
+        "count": 16
+      },
+      {
+        "name": "Miller-Waters Traders",
+        "count": 20
+      },
+      {
+        "name": "Northline Hides",
+        "count": 18
+      },
+      {
+        "name": "Payne Group Hides",
+        "count": 12
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "join-09-Riverbend Hides Ltd",
+    "category": "multi_table_join",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many production batches used material supplied by each of Riverbend Hides Ltd's suppliers?",
+    "behavior": "answer",
+    "ground_truth_sql": "WITH batch_supplier AS (SELECT pb.id, (SELECT po.supplier_id FROM goods_receipts gr JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id JOIN purchase_orders po ON po.id = pol.purchase_order_id WHERE pol.material_id = bi.material_id AND gr.received_date <= pb.produced_date ORDER BY gr.received_date DESC LIMIT 1) AS supplier_id FROM production_batches pb JOIN batch_inputs bi ON bi.production_batch_id = pb.id WHERE pb.tenant_id = %s) SELECT s.name, count(*) FROM batch_supplier bs JOIN suppliers s ON s.id = bs.supplier_id GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Adams-Jackson Traders",
+        "count": 11
+      },
+      {
+        "name": "Anderson Inc Hides",
+        "count": 15
+      },
+      {
+        "name": "Campbell, Henry and Morales Supply",
+        "count": 8
+      },
+      {
+        "name": "Dyer-Odonnell Leather",
+        "count": 26
+      },
+      {
+        "name": "Jones, Gonzalez and Davies Leather",
+        "count": 6
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "join-09-Summit Tanning Works",
+    "category": "multi_table_join",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many production batches used material supplied by each of Summit Tanning Works's suppliers?",
+    "behavior": "answer",
+    "ground_truth_sql": "WITH batch_supplier AS (SELECT pb.id, (SELECT po.supplier_id FROM goods_receipts gr JOIN purchase_order_lines pol ON pol.id = gr.purchase_order_line_id JOIN purchase_orders po ON po.id = pol.purchase_order_id WHERE pol.material_id = bi.material_id AND gr.received_date <= pb.produced_date ORDER BY gr.received_date DESC LIMIT 1) AS supplier_id FROM production_batches pb JOIN batch_inputs bi ON bi.production_batch_id = pb.id WHERE pb.tenant_id = %s) SELECT s.name, count(*) FROM batch_supplier bs JOIN suppliers s ON s.id = bs.supplier_id GROUP BY s.name ORDER BY s.name LIMIT 5",
+    "expected_result": [
+      {
+        "name": "Bauer, Reynolds and Bush Tanning",
+        "count": 5
+      },
+      {
+        "name": "Brown-Davies Leather",
+        "count": 8
+      },
+      {
+        "name": "Cooper and Sons Leather",
+        "count": 10
+      },
+      {
+        "name": "Elliott and Sons Hides",
+        "count": 3
+      },
+      {
+        "name": "Gutierrez Ltd Leather",
+        "count": 6
+      }
+    ],
+    "notes": "requires 3+ table join",
+    "held_out": true
+  },
+  {
+    "id": "time-00",
+    "category": "time_logic",
+    "tenant_name": "Acme Leather Co",
+    "question": "What was Acme Leather Co's revenue in fiscal Q2 (Jul-Sep) 2026?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled' AND invoice_date >= '2026-07-01' AND invoice_date <= '2026-09-30'",
+    "expected_result": "141608.67",
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-01",
+    "category": "time_logic",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How did Riverbend Hides Ltd's material yield trend over the last 6 months, by month?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT date_trunc('month', produced_date) AS month, round(100.0*sum(good_output)/nullif(sum(qty_input),0),1) FROM production_batches WHERE tenant_id = %s AND produced_date >= current_date - interval '6 months' GROUP BY month ORDER BY month",
+    "expected_result": [
+      {
+        "month": "2026-05-01 00:00:00+00:00",
+        "round": "93.7"
+      },
+      {
+        "month": "2026-06-01 00:00:00+00:00",
+        "round": "93.7"
+      },
+      {
+        "month": "2026-07-01 00:00:00+00:00",
+        "round": "93.2"
+      },
+      {
+        "month": "2026-08-01 00:00:00+00:00",
+        "round": "93.0"
+      },
+      {
+        "month": "2026-09-01 00:00:00+00:00",
+        "round": "92.5"
+      },
+      {
+        "month": "2026-10-01 00:00:00+00:00",
+        "round": "91.9"
+      },
+      {
+        "month": "2026-11-01 00:00:00+00:00",
+        "round": "97.7"
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-02",
+    "category": "time_logic",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many purchase orders did Summit Tanning Works place in each fiscal quarter?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT CASE WHEN extract(month FROM order_date) IN (4,5,6) THEN 'Q1' WHEN extract(month FROM order_date) IN (7,8,9) THEN 'Q2' WHEN extract(month FROM order_date) IN (10,11,12) THEN 'Q3' ELSE 'Q4' END AS fy_q, count(*) FROM purchase_orders WHERE tenant_id = %s GROUP BY fy_q ORDER BY fy_q",
+    "expected_result": [
+      {
+        "fy_q": "Q1",
+        "count": 11
+      },
+      {
+        "fy_q": "Q2",
+        "count": 16
+      },
+      {
+        "fy_q": "Q3",
+        "count": 8
+      },
+      {
+        "fy_q": "Q4",
+        "count": 9
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-03",
+    "category": "time_logic",
+    "tenant_name": "Acme Leather Co",
+    "question": "What was Acme Leather Co's total revenue in the most recent calendar month with any invoices?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled' AND date_trunc('month', invoice_date) = (SELECT max(date_trunc('month', invoice_date)) FROM invoices WHERE tenant_id = %s)",
+    "expected_result": "35896.67",
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-04",
+    "category": "time_logic",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many sales orders did Riverbend Hides Ltd place in the last 90 days?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM sales_orders WHERE tenant_id = %s AND order_date >= current_date - interval '90 days'",
+    "expected_result": 11,
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-05",
+    "category": "time_logic",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What was Summit Tanning Works's scrap rate in fiscal Q1 (Apr-Jun) 2026 versus fiscal Q2?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT CASE WHEN extract(month FROM produced_date) IN (4,5,6) THEN 'Q1' ELSE 'Q2' END AS fy_q, round(100.0*sum(scrap_output)/nullif(sum(qty_input),0),1) FROM production_batches WHERE tenant_id = %s AND produced_date >= '2026-04-01' AND produced_date <= '2026-09-30' GROUP BY fy_q ORDER BY fy_q",
+    "expected_result": [
+      {
+        "fy_q": "Q1",
+        "round": "10.0"
+      },
+      {
+        "fy_q": "Q2",
+        "round": "7.5"
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-06",
+    "category": "time_logic",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many goods receipts did Acme Leather Co record year to date?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM goods_receipts WHERE tenant_id = %s AND received_date >= date_trunc('year', current_date)",
+    "expected_result": 79,
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-07",
+    "category": "time_logic",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What was Riverbend Hides Ltd's revenue in fiscal Q2 (Jul-Sep) 2026?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled' AND invoice_date >= '2026-07-01' AND invoice_date <= '2026-09-30'",
+    "expected_result": "166364.53",
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-08",
+    "category": "time_logic",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How did Summit Tanning Works's material yield trend over the last 6 months, by month?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT date_trunc('month', produced_date) AS month, round(100.0*sum(good_output)/nullif(sum(qty_input),0),1) FROM production_batches WHERE tenant_id = %s AND produced_date >= current_date - interval '6 months' GROUP BY month ORDER BY month",
+    "expected_result": [
+      {
+        "month": "2026-07-01 00:00:00+00:00",
+        "round": "91.5"
+      },
+      {
+        "month": "2026-08-01 00:00:00+00:00",
+        "round": "92.1"
+      },
+      {
+        "month": "2026-09-01 00:00:00+00:00",
+        "round": "93.5"
+      },
+      {
+        "month": "2026-10-01 00:00:00+00:00",
+        "round": "94.2"
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-09",
+    "category": "time_logic",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many purchase orders did Acme Leather Co place in each fiscal quarter?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT CASE WHEN extract(month FROM order_date) IN (4,5,6) THEN 'Q1' WHEN extract(month FROM order_date) IN (7,8,9) THEN 'Q2' WHEN extract(month FROM order_date) IN (10,11,12) THEN 'Q3' ELSE 'Q4' END AS fy_q, count(*) FROM purchase_orders WHERE tenant_id = %s GROUP BY fy_q ORDER BY fy_q",
+    "expected_result": [
+      {
+        "fy_q": "Q1",
+        "count": 20
+      },
+      {
+        "fy_q": "Q2",
+        "count": 28
+      },
+      {
+        "fy_q": "Q3",
+        "count": 16
+      },
+      {
+        "fy_q": "Q4",
+        "count": 14
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-10",
+    "category": "time_logic",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What was Riverbend Hides Ltd's total revenue in the most recent calendar month with any invoices?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled' AND date_trunc('month', invoice_date) = (SELECT max(date_trunc('month', invoice_date)) FROM invoices WHERE tenant_id = %s)",
+    "expected_result": "66682.47",
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-11",
+    "category": "time_logic",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How many sales orders did Summit Tanning Works place in the last 90 days?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM sales_orders WHERE tenant_id = %s AND order_date >= current_date - interval '90 days'",
+    "expected_result": 9,
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-12",
+    "category": "time_logic",
+    "tenant_name": "Acme Leather Co",
+    "question": "What was Acme Leather Co's scrap rate in fiscal Q1 (Apr-Jun) 2026 versus fiscal Q2?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT CASE WHEN extract(month FROM produced_date) IN (4,5,6) THEN 'Q1' ELSE 'Q2' END AS fy_q, round(100.0*sum(scrap_output)/nullif(sum(qty_input),0),1) FROM production_batches WHERE tenant_id = %s AND produced_date >= '2026-04-01' AND produced_date <= '2026-09-30' GROUP BY fy_q ORDER BY fy_q",
+    "expected_result": [
+      {
+        "fy_q": "Q1",
+        "round": "7.7"
+      },
+      {
+        "fy_q": "Q2",
+        "round": "7.9"
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-13",
+    "category": "time_logic",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many goods receipts did Riverbend Hides Ltd record year to date?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM goods_receipts WHERE tenant_id = %s AND received_date >= date_trunc('year', current_date)",
+    "expected_result": 91,
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-14",
+    "category": "time_logic",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What was Summit Tanning Works's revenue in fiscal Q2 (Jul-Sep) 2026?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled' AND invoice_date >= '2026-07-01' AND invoice_date <= '2026-09-30'",
+    "expected_result": "79494.01",
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": false
+  },
+  {
+    "id": "time-15",
+    "category": "time_logic",
+    "tenant_name": "Acme Leather Co",
+    "question": "How did Acme Leather Co's material yield trend over the last 6 months, by month?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT date_trunc('month', produced_date) AS month, round(100.0*sum(good_output)/nullif(sum(qty_input),0),1) FROM production_batches WHERE tenant_id = %s AND produced_date >= current_date - interval '6 months' GROUP BY month ORDER BY month",
+    "expected_result": [
+      {
+        "month": "2026-05-01 00:00:00+00:00",
+        "round": "92.0"
+      },
+      {
+        "month": "2026-06-01 00:00:00+00:00",
+        "round": "87.4"
+      },
+      {
+        "month": "2026-07-01 00:00:00+00:00",
+        "round": "92.0"
+      },
+      {
+        "month": "2026-08-01 00:00:00+00:00",
+        "round": "92.4"
+      },
+      {
+        "month": "2026-09-01 00:00:00+00:00",
+        "round": "91.6"
+      },
+      {
+        "month": "2026-10-01 00:00:00+00:00",
+        "round": "91.3"
+      },
+      {
+        "month": "2026-11-01 00:00:00+00:00",
+        "round": "96.0"
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": true
+  },
+  {
+    "id": "time-16",
+    "category": "time_logic",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many purchase orders did Riverbend Hides Ltd place in each fiscal quarter?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT CASE WHEN extract(month FROM order_date) IN (4,5,6) THEN 'Q1' WHEN extract(month FROM order_date) IN (7,8,9) THEN 'Q2' WHEN extract(month FROM order_date) IN (10,11,12) THEN 'Q3' ELSE 'Q4' END AS fy_q, count(*) FROM purchase_orders WHERE tenant_id = %s GROUP BY fy_q ORDER BY fy_q",
+    "expected_result": [
+      {
+        "fy_q": "Q1",
+        "count": 31
+      },
+      {
+        "fy_q": "Q2",
+        "count": 29
+      },
+      {
+        "fy_q": "Q3",
+        "count": 16
+      },
+      {
+        "fy_q": "Q4",
+        "count": 15
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": true
+  },
+  {
+    "id": "time-17",
+    "category": "time_logic",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What was Summit Tanning Works's total revenue in the most recent calendar month with any invoices?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled' AND date_trunc('month', invoice_date) = (SELECT max(date_trunc('month', invoice_date)) FROM invoices WHERE tenant_id = %s)",
+    "expected_result": "39170.15",
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": true
+  },
+  {
+    "id": "time-18",
+    "category": "time_logic",
+    "tenant_name": "Acme Leather Co",
+    "question": "How many sales orders did Acme Leather Co place in the last 90 days?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM sales_orders WHERE tenant_id = %s AND order_date >= current_date - interval '90 days'",
+    "expected_result": 13,
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": true
+  },
+  {
+    "id": "time-19",
+    "category": "time_logic",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What was Riverbend Hides Ltd's scrap rate in fiscal Q1 (Apr-Jun) 2026 versus fiscal Q2?",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT CASE WHEN extract(month FROM produced_date) IN (4,5,6) THEN 'Q1' ELSE 'Q2' END AS fy_q, round(100.0*sum(scrap_output)/nullif(sum(qty_input),0),1) FROM production_batches WHERE tenant_id = %s AND produced_date >= '2026-04-01' AND produced_date <= '2026-09-30' GROUP BY fy_q ORDER BY fy_q",
+    "expected_result": [
+      {
+        "fy_q": "Q1",
+        "round": "6.8"
+      },
+      {
+        "fy_q": "Q2",
+        "round": "7.1"
+      }
+    ],
+    "notes": "exercises fiscal-quarter / relative-date logic",
+    "held_out": true
+  },
+  {
+    "id": "ambiguous-00",
+    "category": "ambiguous",
+    "tenant_name": "Acme Leather Co",
+    "question": "Which of our plants is doing the best?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-01",
+    "category": "ambiguous",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How is our top supplier performing?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-02",
+    "category": "ambiguous",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Who is our best customer?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-03",
+    "category": "ambiguous",
+    "tenant_name": "Acme Leather Co",
+    "question": "What's our yield?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-04",
+    "category": "ambiguous",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How much did we spend with our main supplier?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-05",
+    "category": "ambiguous",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Is production on track?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-06",
+    "category": "ambiguous",
+    "tenant_name": "Acme Leather Co",
+    "question": "How are sales looking?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-07",
+    "category": "ambiguous",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What's the status of our biggest order?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-08",
+    "category": "ambiguous",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Which product should we focus on?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-09",
+    "category": "ambiguous",
+    "tenant_name": "Acme Leather Co",
+    "question": "How healthy is the supply chain right now?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-10",
+    "category": "ambiguous",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What's driving the numbers this period?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": false
+  },
+  {
+    "id": "ambiguous-11",
+    "category": "ambiguous",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Are we hitting our targets?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": true
+  },
+  {
+    "id": "ambiguous-12",
+    "category": "ambiguous",
+    "tenant_name": "Acme Leather Co",
+    "question": "How does this plant compare to the other one?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": true
+  },
+  {
+    "id": "ambiguous-13",
+    "category": "ambiguous",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What should we worry about?",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": true
+  },
+  {
+    "id": "ambiguous-14",
+    "category": "ambiguous",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Give me the highlights.",
+    "behavior": "clarify",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "genuinely underspecified: which dimension/metric/entity is meant is not inferable",
+    "held_out": true
+  },
+  {
+    "id": "unanswerable-00",
+    "category": "unanswerable",
+    "tenant_name": "Acme Leather Co",
+    "question": "Which purchase orders were delivered late?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no due/promised-date field anywhere in the schema",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-01",
+    "category": "unanswerable",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Which sales orders shipped late?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no promised ship date field",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-02",
+    "category": "unanswerable",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's our employee turnover rate?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no termination/end date on employees, only created_at",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-03",
+    "category": "unanswerable",
+    "tenant_name": "Acme Leather Co",
+    "question": "What's the profit margin on each product?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no manufacturing cost/BOM data, only sale and purchase unit prices",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-04",
+    "category": "unanswerable",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What's our carbon footprint?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "not tracked anywhere in this schema",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-05",
+    "category": "unanswerable",
+    "tenant_name": "Summit Tanning Works",
+    "question": "Which customers are at risk of churning?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no engagement/interaction/contact history data",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-06",
+    "category": "unanswerable",
+    "tenant_name": "Acme Leather Co",
+    "question": "What's our employee satisfaction score?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "not tracked",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-07",
+    "category": "unanswerable",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "How many support tickets did we receive?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no support/ticketing data in this schema",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-08",
+    "category": "unanswerable",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's the warranty claim rate on our products?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no warranty/returns/claims data",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-09",
+    "category": "unanswerable",
+    "tenant_name": "Acme Leather Co",
+    "question": "Who approved each purchase order?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no approval/workflow data, only status",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-10",
+    "category": "unanswerable",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "What's our on-time delivery rate to customers?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no promised delivery date field",
+    "held_out": false
+  },
+  {
+    "id": "unanswerable-11",
+    "category": "unanswerable",
+    "tenant_name": "Summit Tanning Works",
+    "question": "How much did we spend on marketing this year?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no marketing/expense data in this schema",
+    "held_out": true
+  },
+  {
+    "id": "unanswerable-12",
+    "category": "unanswerable",
+    "tenant_name": "Acme Leather Co",
+    "question": "What's the average employee tenure?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no end-date/termination data to compute tenure",
+    "held_out": true
+  },
+  {
+    "id": "unanswerable-13",
+    "category": "unanswerable",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "Which suppliers offer the best payment terms?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "no payment-terms field on suppliers or purchase orders",
+    "held_out": true
+  },
+  {
+    "id": "unanswerable-14",
+    "category": "unanswerable",
+    "tenant_name": "Summit Tanning Works",
+    "question": "What's our inventory turnover ratio?",
+    "behavior": "unanswerable",
+    "ground_truth_sql": null,
+    "expected_result": null,
+    "notes": "stock_movements has no running balance; turnover needs point-in-time inventory levels not derivable without additional assumptions",
+    "held_out": true
+  },
+  {
+    "id": "messy-00",
+    "category": "messy_wording",
+    "tenant_name": "Acme Leather Co",
+    "question": "how many suppliers we got for Acme Leather Co",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM suppliers WHERE tenant_id = %s",
+    "expected_result": 7,
+    "notes": "deliberately garbled phrasing; same ground truth as the equivalent clean question",
+    "held_out": false
+  },
+  {
+    "id": "messy-01",
+    "category": "messy_wording",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "wats total revenu for Riverbend Hides Ltd not counting cancelled ones",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT sum(amount) FROM invoices WHERE tenant_id = %s AND status != 'cancelled'",
+    "expected_result": "1418363.21",
+    "notes": "deliberately garbled phrasing; same ground truth as the equivalent clean question",
+    "held_out": false
+  },
+  {
+    "id": "messy-02",
+    "category": "messy_wording",
+    "tenant_name": "Summit Tanning Works",
+    "question": "gimme count of open POs 4 Summit Tanning Works",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM purchase_orders WHERE tenant_id = %s AND status = 'open'",
+    "expected_result": 0,
+    "notes": "deliberately garbled phrasing; same ground truth as the equivalent clean question",
+    "held_out": false
+  },
+  {
+    "id": "messy-03",
+    "category": "messy_wording",
+    "tenant_name": "Acme Leather Co",
+    "question": "yield pct 4 Acme Leather Co pls",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT round(100.0*sum(good_output)/nullif(sum(qty_input),0),1) FROM production_batches WHERE tenant_id = %s",
+    "expected_result": "92.5",
+    "notes": "deliberately garbled phrasing; same ground truth as the equivalent clean question",
+    "held_out": false
+  },
+  {
+    "id": "messy-04",
+    "category": "messy_wording",
+    "tenant_name": "Riverbend Hides Ltd",
+    "question": "how many custmers does Riverbend Hides Ltd hav",
+    "behavior": "answer",
+    "ground_truth_sql": "SELECT count(*) FROM customers WHERE tenant_id = %s",
+    "expected_result": 7,
+    "notes": "deliberately garbled phrasing; same ground truth as the equivalent clean question",
+    "held_out": true
+  }
+]
