@@ -1,0 +1,109 @@
+version: "0.1.0"
+
+metrics:
+  material_yield_pct:
+    label: "Material yield %"
+    definition: "100.0 * SUM(good_output) / NULLIF(SUM(qty_input), 0)"
+    source: production_batches
+    description: >
+      Share of input material that became good (non-scrap) output.
+      Always good_output / qty_input — never good_output / (good_output +
+      scrap_output), even though the two are close; qty_input is the
+      authoritative input figure.
+
+  scrap_rate_pct:
+    label: "Scrap rate %"
+    definition: "100.0 * SUM(scrap_output) / NULLIF(SUM(qty_input), 0)"
+    source: production_batches
+    description: "Share of input material that became scrap. Complementary to material_yield_pct but not simply 100 - yield, since some input may be unaccounted for; compute independently."
+
+  revenue:
+    label: "Revenue"
+    definition: "SUM(amount)"
+    source: invoices
+    filter: "status != 'cancelled'"
+    description: "Invoiced amount. A 'cancelled' invoice was never real revenue and must always be excluded, regardless of whether the question says so explicitly."
+
+  quality_pass_rate_pct:
+    label: "Quality pass rate %"
+    definition: "100.0 * COUNT(*) FILTER (WHERE result = 'pass') / NULLIF(COUNT(*) FILTER (WHERE result IS NOT NULL), 0)"
+    source: quality_checks
+    description: "Of the batches that WERE checked, what share passed. Batches with no quality_checks row at all (a missing check, not a fail) are excluded from both numerator and denominator — do not treat a missing check as a fail."
+
+  purchase_fill_rate_pct:
+    label: "Purchase order fill rate %"
+    definition: "100.0 * SUM(received_per_line) / NULLIF(SUM(qty_ordered), 0)"
+    source: "purchase_order_lines LEFT JOIN (goods_receipts grouped by line)"
+    description: >
+      How much of what was ordered actually arrived. A line can have
+      MULTIPLE goods_receipts rows (partial deliveries over time) — sum
+      qty_received PER LINE first (e.g. a subquery/CTE grouped by
+      purchase_order_line_id), then join that single per-line total back
+      to purchase_order_lines with a LEFT JOIN and coalesce to 0 for a
+      line with nothing received yet. Joining purchase_order_lines
+      directly to goods_receipts and summing qty_ordered across the
+      joined rows double-counts qty_ordered for any line with more than
+      one receipt.
+
+dimensions:
+  supplier:
+    table: suppliers
+    synonyms: [vendor, party, seller]
+  customer:
+    table: customers
+    synonyms: [buyer, client, account]
+  plant:
+    table: plants
+    synonyms: [factory, site, facility, location]
+  product:
+    table: products
+    synonyms: [finished good, sku, item, finished leather]
+  material:
+    table: materials
+    synonyms: [raw material, input, hide, hides, raw hide]
+
+business_rules:
+  - id: revenue_excludes_cancelled
+    rule: >
+      Revenue figures must exclude invoices with status = 'cancelled',
+      always — this is already encoded in the revenue metric's filter
+      above, but apply it to any ad-hoc revenue-shaped query too.
+
+  - id: quarter_definition
+    rule: >
+      Unless the user explicitly says "calendar quarter", treat "quarter"
+      as the Indian financial-year quarter: Q1 = Apr-Jun, Q2 = Jul-Sep,
+      Q3 = Oct-Dec, Q4 = Jan-Mar. "Last quarter" is relative to the
+      current date.
+
+  - id: yield_definition
+    rule: >
+      Yield is always good_output / qty_input on production_batches,
+      never good_output / (good_output + scrap_output). See the
+      material_yield_pct metric definition.
+
+  - id: no_delivery_due_dates
+    rule: >
+      There is no promised/due date field anywhere in this schema — only
+      order_date, start_date/end_date, received_date, invoice_date,
+      payment_date. A question about "on-time" or "late" deliveries/
+      orders/payments cannot be answered with this data; say so rather
+      than inventing a definition of "on time."
+
+  - id: unit_mismatch_caution
+    rule: >
+      purchase_order_lines.unit, batch_inputs.unit, and
+      stock_movements.unit are recorded per-transaction and sometimes
+      disagree with the canonical materials.unit/products.unit. Before
+      summing a quantity column across rows, either filter to rows whose
+      unit matches the canonical unit, or state the mismatch as a caveat
+      in the answer — never silently sum mismatched units together.
+
+  - id: supplier_name_variants
+    rule: >
+      The same real supplier may appear with slightly different spelled-
+      out names across rows (e.g. trailing punctuation, casing). When a
+      question asks about one supplier by name, match loosely (e.g.
+      ILIKE with wildcards, or group by a normalized form) rather than an
+      exact equality — an exact match can silently miss some of that
+      supplier's own rows.
