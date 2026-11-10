@@ -46,19 +46,36 @@ See [SECURITY.md](./SECURITY.md) for the full threat model and
 
 ## Status
 
-Week 1 done — see the build spec for the three-week plan. **62/62 tests
-pass**, including the project's own flagship question ("which supplier's
-hides gave the worst yield last quarter?") answered correctly end to end
-through the real LangGraph graph, real validator, and real RLS-enforced
-Postgres connection, and a 1,000-request connection-pool alternation test
-with zero cross-tenant leaks. See [LESSONS.md](./LESSONS.md) for two real
-bugs the tests caught (a silently-broken dangerous-function blocklist, and
-ordinary `WHERE a AND b` being misclassified as an unrecognized function)
-that a code read alone didn't surface.
+Week 1 and Week 2 done — see the build spec for the three-week plan.
+**146/146 tests pass.**
 
-The model-calling path itself (`real_sql_generator`) is untested against
-a live model — no `ANTHROPIC_API_KEY` was available while building this.
-See [KNOWN_LIMITS.md](./KNOWN_LIMITS.md).
+Week 1 delivered the security-critical core: synthetic multi-tenant data,
+RLS, the AST-based SQL validator, the first working LangGraph agent
+graph, and the Week 1 security test matrix (including a 1,000-request
+connection-pool alternation test with zero cross-tenant leaks).
+
+Week 2 built the parts that make answers actually good rather than just
+safe: a versioned semantic layer (metrics/dimensions/business rules), a
+pgvector verified-queries store for few-shot retrieval, a clarification
+step via LangGraph's native `interrupt()` with `PostgresSaver` (survives
+a process restart mid-interrupt — see
+`tests/security/test_agent_clarify_postgres_checkpointer.py`), 150 golden
+questions with ground truth computed from real seeded-data SQL runs (40
+held out), a result-check repair step, cheap→strong model escalation on
+repair, and a full A-E ablation harness with McNemar's paired
+significance test to measure what each addition actually contributes.
+
+See [LESSONS.md](./LESSONS.md) for the real bugs the tests caught along
+the way — a silently-broken dangerous-function blocklist, `WHERE a AND b`
+and `CASE`/`date_trunc` tripping the same sqlglot-allowlist issue in
+different forms, and a LangGraph state key that was only "optional" on
+the happy path.
+
+The model-calling path itself (`real_sql_generator`) and the A-E
+ablation harness are built and fully unit-tested with the model/DB calls
+faked, but have not been run against a live model — no
+`ANTHROPIC_API_KEY` was available while building this. See
+[KNOWN_LIMITS.md](./KNOWN_LIMITS.md).
 
 ## Quickstart (dev)
 

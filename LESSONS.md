@@ -50,6 +50,46 @@ third-party library can put something in an unexpected category, and the
 only way to find that is to actually run a realistic input through the
 real library, not just reason about what "should" be in `exp.Func`.
 
+## `date_trunc` and `CASE` tripped the same allowlist in a new way
+
+While seeding real verified-query examples (Week 2), two more legitimate
+query shapes got rejected by the SQL validator for the same underlying
+reason as the `And`/`Or` bug above, but through different sqlglot nodes:
+
+- `date_trunc('quarter', ...)` parses to `exp.TimestampTrunc`, whose
+  `sql_name()` returns `"TIMESTAMP_TRUNC"` — not `"date_trunc"` — so it
+  silently missed the `ALLOWED_FUNCTIONS` allowlist even though
+  `date_trunc` itself was on it. Fixed by adding `"timestamp_trunc"` to
+  the allowlist.
+- `CASE`/`IF` expressions (needed for the fiscal-quarter business rule:
+  the ERP's calendar year doesn't match its Q1-Q4 reporting quarters) are,
+  like `And`/`Or`, modeled as `exp.Func` subclasses (`exp.Case`,
+  `exp.If`) in this sqlglot version. Fixed the same way — extending the
+  isinstance exclusion rather than trying to allowlist them by name.
+
+Same lesson as above, found the same way: real queries against the real
+library, not unit tests against the validator's intended behavior.
+
+## A LangGraph node that skips setting a state key — the key still gets read later
+
+The clarification-flow graph has a branch where `generate_sql_node`
+decides the question needs clarification and doesn't produce real SQL. It
+set `clarification_question` and left `sql` unset. That's fine until the
+round-cap kicks in (`MAX_CLARIFY_ROUNDS`): the router then sends the state
+to `validate_node` anyway, which unconditionally reads `state["sql"]` —
+`KeyError`, only reachable once a question gets ambiguous enough to hit
+the cap. Caught by
+`test_clarification_is_capped_at_one_round_even_if_the_model_keeps_asking`,
+not by the simpler happy-path clarify test, because the happy path never
+drives state through every edge the router can actually take. Fixed by
+always setting `"sql": generated.sql` (empty string on the clarifying
+branch) so every node downstream of a conditional edge can rely on the
+key existing regardless of which path got there. The general shape: a
+`TypedDict`-based state machine's "optional" keys are only as optional as
+the LEAST permissive node that reads them — audit by trawling every edge
+a router can take, not just the one a hand-written scenario happens to
+exercise.
+
 ## What this says about the testing strategy, not just the two bugs
 
 Both bugs were caught by tests that exercise the REAL `sqlglot` parser and

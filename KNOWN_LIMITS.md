@@ -48,3 +48,20 @@
   comma by coincidence of how sqlglot models commas** — only tested
   against real `FROM a, b` patterns, not exhaustively fuzzed against every
   way sqlglot might represent an implicit join.
+- **The A-E ablation harness (`scripts/ablation_eval.py`) is built but has
+  not been run.** It requires a real `ANTHROPIC_API_KEY` and a seeded
+  Postgres instance to run all 5 configs (schema-only through
+  +escalation) against the 110 visible golden questions and compute
+  pairwise McNemar's tests between them — same honest gap as
+  `real_sql_generator` above and `gatekeep-mcp`'s layer-2 eval. Everything
+  it depends on is tested in isolation with the model/DB calls faked: the
+  `allow_escalation`/`result_checker` graph toggles
+  (`tests/unit/test_agent_graph_ablation_toggles.py`), the statistical
+  test itself (`tests/unit/test_mcnemar.py`, including a hand-verified
+  exact-binomial case), the scoring logic
+  (`tests/unit/test_scoring.py`), and the result-checker's prompt/parsing
+  (`tests/unit/test_result_check.py`). That proves the harness's logic is
+  correct; it does not prove what the actual per-config accuracy numbers
+  or significance results are. Run
+  `ANTHROPIC_API_KEY=sk-... uv run python scripts/ablation_eval.py`
+  against a seeded instance before citing any real A-E comparison.

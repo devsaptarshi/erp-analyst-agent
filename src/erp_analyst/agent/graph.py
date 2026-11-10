@@ -25,6 +25,7 @@ bounded budget, same principle as the repair loop.
 from __future__ import annotations
 
 from collections.abc import Callable
+from dataclasses import dataclass
 
 from langgraph.graph import END, StateGraph
 from langgraph.types import interrupt
@@ -44,10 +45,27 @@ class ExecutorProtocol:
     def execute(self, raw_sql: str) -> ExecutionResult: ...
 
 
+@dataclass
+class ResultCheck:
+    ok: bool
+    concern: str | None = None  # why the result looks wrong, fed back into the repair prompt like a validation error
+
+
+# Reviews (question, sql, rows) after a successful execution, before
+# answering — the "D" step in the A-E ablation comparison. Optional: most
+# of the time the executed, validated SQL's result is trustworthy as-is;
+# this exists to catch the cases where it technically ran but is probably
+# not what was asked (e.g. an empty result for a question that obviously
+# should have matched something).
+ResultChecker = Callable[[str, str, "list[dict]"], ResultCheck]
+
+
 def build_graph(
     sql_generator: SqlGenerator = real_sql_generator,
     executor_factory: ExecutorFactory = TenantScopedExecutor,
     checkpointer=None,
+    allow_escalation: bool = True,
+    result_checker: ResultChecker | None = None,
 ):
     def generate_sql_node(state: AgentState) -> dict:
         tier = state.get("model_tier", "cheap")
@@ -97,8 +115,11 @@ def build_graph(
     def repair_node(state: AgentState) -> dict:
         attempts = state.get("attempts", 0) + 1
         # Escalate to the strong model only once the cheap model has
-        # already failed once — most questions never need this.
-        tier = "strong" if attempts >= 2 else state.get("model_tier", "cheap")
+        # already failed once, and only when escalation is enabled at all
+        # (the "E" step in the A-E ablation comparison — configs A-D keep
+        # model_tier fixed, to measure whether escalation itself helps).
+        current_tier = state.get("model_tier", "cheap")
+        tier = "strong" if (allow_escalation and attempts >= 2) else current_tier
         generated = sql_generator(state["question"], state.get("validation_errors"), state.get("sql"), tier)
         return {"plan": generated.plan, "sql": generated.sql, "attempts": attempts, "model_tier": tier}
 
@@ -110,6 +131,22 @@ def build_graph(
         return {"rows": None, "validation_errors": [result.error or "execution failed"]}
 
     def route_after_execute(state: AgentState) -> str:
+        if state.get("rows") is not None:
+            return "result_check" if result_checker else "answer"
+        if state.get("attempts", 0) < MAX_REPAIR_ATTEMPTS:
+            return "repair"
+        return "answer"
+
+    def result_check_node(state: AgentState) -> dict:
+        check = result_checker(state["question"], state["sql"], state["rows"])
+        if check.ok:
+            return {}
+        # Treat a failed result-check like a validation failure: it
+        # re-enters the SAME bounded repair loop and the SAME attempt
+        # budget, never a separate unbounded one.
+        return {"rows": None, "validation_errors": [check.concern or "result failed review"]}
+
+    def route_after_result_check(state: AgentState) -> str:
         if state.get("rows") is not None:
             return "answer"
         if state.get("attempts", 0) < MAX_REPAIR_ATTEMPTS:
@@ -141,7 +178,14 @@ def build_graph(
     graph.add_edge("clarify", "generate_sql")
     graph.add_conditional_edges("validate", route_after_validate, {"execute": "execute", "repair": "repair", "answer": "answer"})
     graph.add_edge("repair", "validate")
-    graph.add_conditional_edges("execute", route_after_execute, {"answer": "answer", "repair": "repair"})
+
+    if result_checker is not None:
+        graph.add_node("result_check", result_check_node)
+        graph.add_conditional_edges("execute", route_after_execute, {"result_check": "result_check", "repair": "repair"})
+        graph.add_conditional_edges("result_check", route_after_result_check, {"answer": "answer", "repair": "repair"})
+    else:
+        graph.add_conditional_edges("execute", route_after_execute, {"answer": "answer", "repair": "repair"})
+
     graph.add_edge("answer", END)
 
     return graph.compile(checkpointer=checkpointer)
