@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: erp_analyst
+      POSTGRES_USER: erp_admin
+      POSTGRES_PASSWORD: dev-only-local-password
+    ports:
+      - "5433:5432"
+    volumes:
+      - erp_analyst_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U erp_admin -d erp_analyst"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  erp_analyst_pgdata:
