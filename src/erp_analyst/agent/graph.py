@@ -157,13 +157,18 @@ def build_graph(
         if state.get("rows") is not None:
             rows = state["rows"]
             answer = f"Found {len(rows)} row(s)." if rows else "No matching rows were found."
-        else:
-            errors = state.get("validation_errors") or ["unknown error"]
-            answer = (
-                "I couldn't produce a safe, valid query for this question after "
-                f"{MAX_REPAIR_ATTEMPTS} attempt(s). Last issue: " + "; ".join(errors)
-            )
-        return {"answer": answer}
+            # "high" = valid SQL on the first try, nothing to repair or
+            # second-guess. "medium" = it got there, but only after a
+            # repair attempt and/or a result-check objection — the kind of
+            # answer worth a quick human glance before trusting it blindly.
+            confidence = "high" if state.get("attempts", 0) == 0 else "medium"
+            return {"answer": answer, "confidence": confidence}
+        errors = state.get("validation_errors") or ["unknown error"]
+        answer = (
+            "I couldn't produce a safe, valid query for this question after "
+            f"{MAX_REPAIR_ATTEMPTS} attempt(s). Last issue: " + "; ".join(errors)
+        )
+        return {"answer": answer, "confidence": "low"}
 
     graph = StateGraph(AgentState)
     graph.add_node("generate_sql", generate_sql_node)

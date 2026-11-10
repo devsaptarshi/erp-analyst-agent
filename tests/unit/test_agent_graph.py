@@ -93,6 +93,47 @@ def test_repeated_invalid_sql_exhausts_the_repair_budget_and_never_executes():
     assert len(generator.calls) == 3  # initial + 2 repairs, budget respected exactly
 
 
+def test_confidence_is_high_when_sql_is_valid_on_the_first_try():
+    generator = ScriptedGenerator([("plan", "SELECT name FROM suppliers")])
+    executor_factory = executor_factory_for(ExecutionResult(ok=True, rows=[{"name": "Acme"}], columns=["name"]))
+    graph = build_graph(sql_generator=generator, executor_factory=executor_factory)
+
+    result = graph.invoke({"question": "x", "tenant_id": "t1", "model_tier": "cheap"})
+
+    assert result["confidence"] == "high"
+
+
+def test_confidence_is_medium_when_a_repair_was_needed_to_succeed():
+    generator = ScriptedGenerator(
+        [
+            ("bad plan", "SELECT * FROM pg_shadow"),
+            ("fixed", "SELECT name FROM suppliers"),
+        ]
+    )
+    executor_factory = executor_factory_for(ExecutionResult(ok=True, rows=[{"name": "Acme"}], columns=["name"]))
+    graph = build_graph(sql_generator=generator, executor_factory=executor_factory)
+
+    result = graph.invoke({"question": "x", "tenant_id": "t1", "model_tier": "cheap"})
+
+    assert result["confidence"] == "medium"
+
+
+def test_confidence_is_low_when_the_repair_budget_is_exhausted():
+    generator = ScriptedGenerator(
+        [
+            ("bad", "SELECT * FROM pg_shadow"),
+            ("still bad", "DROP TABLE suppliers"),
+            ("still bad again", "SELECT pg_sleep(5)"),
+        ]
+    )
+    executor_factory = executor_factory_for(ExecutionResult(ok=True, rows=[{"should": "never run"}]))
+    graph = build_graph(sql_generator=generator, executor_factory=executor_factory)
+
+    result = graph.invoke({"question": "x", "tenant_id": "t1", "model_tier": "cheap"})
+
+    assert result["confidence"] == "low"
+
+
 def test_a_database_execution_error_also_triggers_repair():
     generator = ScriptedGenerator(
         [

@@ -15,3 +15,4 @@ class AgentState(TypedDict, total=False):
     trace_id: str
     clarification_question: str | None  # set when the model needs a human answer before it can pick the right SQL
     clarification_rounds: int
+    confidence: str  # "high" | "medium" | "low" — set by answer_node, see graph.py

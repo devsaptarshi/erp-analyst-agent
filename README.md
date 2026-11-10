@@ -46,8 +46,12 @@ See [SECURITY.md](./SECURITY.md) for the full threat model and
 
 ## Status
 
-Week 1 and Week 2 done — see the build spec for the three-week plan.
-**146/146 tests pass.**
+Weeks 1, 2 and 3 done — see the build spec for the three-week plan. The
+non-DB-dependent test suite passes in this container; the full suite
+(including the Postgres/RLS-dependent security tests) was last verified
+green earlier in this build session, before a worker restart left this
+container without a reachable Docker daemon — see
+[KNOWN_LIMITS.md](./KNOWN_LIMITS.md) for exactly what that affects.
 
 Week 1 delivered the security-critical core: synthetic multi-tenant data,
 RLS, the AST-based SQL validator, the first working LangGraph agent
@@ -71,11 +75,47 @@ and `CASE`/`date_trunc` tripping the same sqlglot-allowlist issue in
 different forms, and a LangGraph state key that was only "optional" on
 the happy path.
 
-The model-calling path itself (`real_sql_generator`) and the A-E
-ablation harness are built and fully unit-tested with the model/DB calls
-faked, but have not been run against a live model — no
-`ANTHROPIC_API_KEY` was available while building this. See
-[KNOWN_LIMITS.md](./KNOWN_LIMITS.md).
+Week 3 built the product and launch layer: a FastAPI backend
+(`src/erp_analyst/api/`) wrapping the graph with chat/resume/feedback/
+traces endpoints, a Next.js frontend (`frontend/`) with a chat UI,
+collapsible SQL view, a bar chart for simple metric results, a tenant
+switcher, and thumbs up/down feedback; per-run confidence scoring
+(`high`/`medium`/`low`, based on whether repair was needed) and
+lightweight per-node tracing (`src/erp_analyst/tracing.py`,
+`src/erp_analyst/db/traces.py` — a hand-rolled stand-in for Langfuse, see
+DEPLOY.md); per-IP rate limiting and a daily token ceiling
+(`src/erp_analyst/api/limits.py`); a second model provider (OpenAI)
+selectable through config; and an optional `ask_erp` MCP tool bridging
+this project into `gatekeep-mcp`'s approval gateway.
+
+The model-calling path itself (`real_sql_generator`), the second model
+provider, the A-E ablation harness, and the held-out eval run are all
+built and fully unit-tested with the model/DB calls faked, but none have
+been run against a live model — no `ANTHROPIC_API_KEY` (or
+`OPENAI_API_KEY`) was available while building this. Nothing has been
+deployed to a real host either — see
+[KNOWN_LIMITS.md](./KNOWN_LIMITS.md) for the complete, honest list of
+what that affects, and [DEPLOY.md](./DEPLOY.md) /
+[DEMO.md](./DEMO.md) for what's ready to run once a key and a host are
+available.
+
+## Architecture
+
+```
+frontend/ (Next.js)  --HTTP-->  src/erp_analyst/api/ (FastAPI)
+                                        |
+                                        v
+                          src/erp_analyst/agent/graph.py (LangGraph)
+                          generate_sql -> [clarify] -> validate -> execute -> [result_check] -> answer
+                                        |                              |
+                                        v                              v
+                     sql_generation.py (+ semantic layer,     db/executor.py (RLS-enforced,
+                     verified-query retrieval)                 read-only, per-request connection)
+```
+
+Traces and feedback persist to Postgres (`db/traces.py`); the optional
+`ask_erp` MCP tool in the sibling `gatekeep-mcp` project calls the
+FastAPI backend's `/chat` endpoint directly.
 
 ## Quickstart (dev)
 
@@ -86,4 +126,32 @@ docker compose up -d                 # Postgres 16 + pgvector on :5433
 uv run python scripts/init_db.py     # schema, analyst_ro role, RLS policies
 uv run python scripts/seed_data.py   # synthetic data for 3 tenants
 uv run pytest                        # full suite, including the security test matrix
+ANTHROPIC_API_KEY=sk-... uv run uvicorn erp_analyst.api.main:app --reload
 ```
+
+```bash
+cd frontend && cp .env.example .env && npm install && npm run dev
+```
+
+See [DEPLOY.md](./DEPLOY.md) for Docker/production deployment and
+[DEMO.md](./DEMO.md) for the two-minute demo script.
+
+## Known limits, launch checklist
+
+- [x] Confirm nothing resembles employer or client code or data — see
+      "synthetic project" above
+- [x] Confirm the seed script reproduces the same database — fixed Faker
+      seed in `scripts/seed_data.py`
+- [x] Confirm secrets are absent from git history — `.env` is gitignored
+      and was never committed
+- [ ] Tag `v0.1.0` — not yet tagged; held until the held-out eval and
+      ablation have actually been run (see KNOWN_LIMITS.md) so the tag
+      means something
+- [ ] Publish a post: "The `set_config` hole in text-to-SQL with RLS" —
+      drafted in [BLOG_POST_DRAFT.md](./BLOG_POST_DRAFT.md), not posted
+- [ ] Record the demo — scripted in [DEMO.md](./DEMO.md), not recorded
+- [ ] Add it to your CV and pin it on GitHub — the CV line template is in
+      BLOG_POST_DRAFT.md, with placeholders for the real numbers
+
+See [KNOWN_LIMITS.md](./KNOWN_LIMITS.md) for the complete list of what's
+built-but-unverified versus genuinely out of scope.

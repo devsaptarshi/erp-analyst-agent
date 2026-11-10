@@ -15,5 +15,33 @@ services:
       timeout: 3s
       retries: 20
 
+  # Demo-only services below — not part of the test suite's docker-compose
+  # usage (scripts/init_db.py etc. still just need `postgres` on :5433).
+  # Needs a real ANTHROPIC_API_KEY to answer anything; pass it via a local
+  # .env or the host's environment. See KNOWN_LIMITS.md.
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://erp_admin:dev-only-local-password@postgres:5432/erp_analyst
+      ANALYST_DATABASE_URL: postgresql://analyst_ro:dev-only-local-password@postgres:5432/erp_analyst
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
 volumes:
   erp_analyst_pgdata:

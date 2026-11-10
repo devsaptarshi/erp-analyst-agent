@@ -90,6 +90,40 @@ the LEAST permissive node that reads them — audit by trawling every edge
 a router can take, not just the one a hand-written scenario happens to
 exercise.
 
+## ChatOpenAI refuses to construct without a key; ChatAnthropic doesn't
+
+Adding the second model provider (Week 3) surfaced a small but real
+asymmetry between the two LangChain chat model classes: `ChatAnthropic`
+constructs fine with an empty `api_key=""` (it only fails at call time),
+but `ChatOpenAI` raises `OpenAIError: Missing credentials` at
+construction. The provider-selection tests
+(`tests/unit/test_models.py`) needed a dummy placeholder key injected via
+`monkeypatch` just to prove the right model id and class got selected —
+no real call happens, but the object still has to be *buildable*. Worth
+knowing before assuming "no API key configured" fails the same way
+everywhere: it depends on which SDK the LangChain wrapper is built on.
+
+## A worker restart mid-session took the Docker daemon with it
+
+Partway through Week 3, this container's worker process restarted (an
+environment event, not something this session did), and the Docker
+daemon it had been using came back unreachable afterward — attempting to
+restart it directly hit a `ulimit` permission error, and the sandboxed
+bypass needed to force it was (correctly) denied. Every DB-dependent test
+written in Week 1/2 had been verified passing against a real Postgres
+instance earlier in this same session; after the restart, only the
+Week 3 work could be re-verified, using the project's established
+pattern of faking the model and the executor rather than needing a live
+DB at all (`tests/unit/test_api.py`, `tests/unit/test_tracing.py`,
+`tests/unit/test_models.py`, `tests/unit/test_limits.py`). The general
+lesson: a project where every integration-level test can ALSO run with
+the DB/model faked never gets fully blocked by losing the DB — only the
+tests that specifically need to prove the real RLS/Postgres boundary do,
+and those are exactly the ones already committed and documented as
+passing from before the restart, not re-litigated from scratch. See
+KNOWN_LIMITS.md for exactly which test files this affects and why they
+weren't re-run here.
+
 ## What this says about the testing strategy, not just the two bugs
 
 Both bugs were caught by tests that exercise the REAL `sqlglot` parser and

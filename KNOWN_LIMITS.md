@@ -65,3 +65,65 @@
   or significance results are. Run
   `ANTHROPIC_API_KEY=sk-... uv run python scripts/ablation_eval.py`
   against a seeded instance before citing any real A-E comparison.
+- **The held-out question set (40 of the 150 golden questions, never used
+  while building the agent or tuning prompts) has not been run either.**
+  Same blocker, same honest gap: no `ANTHROPIC_API_KEY`. This is the one
+  the build spec asks for explicitly ("run the held-out questions once")
+  as the final, unbiased accuracy number — the visible-question ablation
+  above is for comparing configs against EACH OTHER, not for citing a
+  headline accuracy, precisely because the same questions were visible
+  while this was built. Don't skip straight to the CV-line number
+  (README.md) without running this first.
+- **The second model provider (OpenAI, via `langchain-openai`) is wired
+  through `get_model()`/`Settings` but untested against a live OpenAI
+  account** — no `OPENAI_API_KEY` was available either. `tests/unit/test_models.py`
+  proves provider/tier selection constructs the right client with the
+  right model id; it doesn't prove OpenAI's models actually produce
+  usable SQL through this project's prompts, which were written and
+  tuned entirely against Anthropic models.
+- **The FastAPI backend's rate limiter estimates tokens from question
+  length (`len(question) // 4`), not real Anthropic usage metadata** —
+  because there's no live model call to get real usage from in this
+  environment. `src/erp_analyst/api/limits.py`'s `estimate_cost_usd()`
+  pricing table is also unverified against current list pricing; check
+  before trusting any cost figure this produces.
+- **Traces are a hand-rolled Postgres table (`src/erp_analyst/db/traces.py`),
+  not Langfuse**, which the build spec's deployment table lists as the
+  suggested option. Langfuse needs its own hosted project and API key,
+  which this environment doesn't have; the hand-rolled version is real
+  and tested (`tests/unit/test_tracing.py`, `tests/unit/test_api.py`) but
+  lacks Langfuse's UI, cross-run analytics, and prompt-version tracking.
+- **The Next.js frontend (`frontend/`) has been built (`npm run build`
+  succeeds) but never run against a live backend** — no `ANTHROPIC_API_KEY`
+  to actually answer a chat message through the real UI, and no browser
+  in this environment to click through it even against a stubbed
+  backend. The API it calls is unit-tested end to end with a fake model
+  (`tests/unit/test_api.py`); the frontend's own request/response
+  shapes match that API's Pydantic models by construction (same
+  `ChatResponse` fields on both sides), but this is not the same as
+  having watched it work in a browser.
+- **The DB-dependent test suite (`tests/security/*`, `tests/unit/test_verified_queries.py`,
+  the Postgres-checkpointer clarify test) could not be re-run at the end
+  of this Week 3 session** — this container's Docker daemon was
+  unreachable after a worker restart partway through the session (`docker
+  compose up -d` failed with "Cannot connect to the Docker daemon"), and
+  starting it required a sandbox bypass that was denied. These tests were
+  passing earlier in this same session with a live Postgres (the Week 1/2
+  commits cite exact pass counts run against one); only the newly-added
+  Week 3 code — the FastAPI backend, tracing, rate limiter, second
+  provider, confidence scoring — has been verified in THIS environment,
+  via the subset of the suite that doesn't need Postgres (all fakeable
+  with the same model/executor-faking pattern the rest of the project
+  uses). Re-run the full suite with Postgres up before trusting the
+  DB-dependent tests are still green after these changes.
+- **Nothing in this repo has been deployed to a real host.** `DEPLOY.md`'s
+  Dockerfiles and docker-compose config are written and
+  `docker compose config`-validated, but this environment has no
+  reachable Docker daemon (confirmed: `Cannot connect to the Docker
+  daemon`) and no AWS/Vercel credentials, so no image has actually been
+  built or run, and nothing has been pushed to AWS or Vercel.
+- **The demo recording and the technical blog post are not produced by
+  this repo** — see `DEMO.md` for the script and `BLOG_POST_DRAFT.md`
+  for drafted content; actually recording a screen capture and
+  publishing a post are human actions outside what this environment can
+  do (no screen/browser to record, no blog platform credentials).

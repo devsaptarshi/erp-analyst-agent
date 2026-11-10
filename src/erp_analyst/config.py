@@ -11,6 +11,15 @@ class Settings(BaseSettings):
     erp_model_cheap: str = "claude-haiku-5-5"
     erp_model_strong: str = "claude-sonnet-5-5"
 
+    # Second provider, selectable per the Week 3 build spec item ("add a
+    # second model provider through config") — swap in by setting
+    # erp_model_provider=openai and the two model ids below. No OpenAI API
+    # key was available while building this; see KNOWN_LIMITS.md.
+    erp_model_provider: str = "anthropic"  # "anthropic" | "openai"
+    openai_api_key: str = ""
+    erp_openai_model_cheap: str = "gpt-5-mini"
+    erp_openai_model_strong: str = "gpt-5"
+
     analyst_statement_timeout_ms: int = 5000
 
 
