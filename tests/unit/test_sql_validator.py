@@ -124,6 +124,18 @@ def test_a_subquery_touching_a_disallowed_table_is_rejected():
     assert not result.ok
 
 
+def test_a_where_clause_with_multiple_and_or_conditions_is_not_mistaken_for_an_unknown_function():
+    # Regression test: sqlglot's exp.And / exp.Or are subclasses of
+    # exp.Func in this version, so a naive "every exp.Func must be on the
+    # allowlist" walk flags ordinary boolean logic as an unrecognized
+    # function call — found via an end-to-end test with a real multi-
+    # condition WHERE clause, not by any of the simpler tests above.
+    result = validate(
+        "SELECT name FROM suppliers WHERE (tenant_id = 'x' AND name = 'y') OR (tenant_id = 'x' AND name = 'z')"
+    )
+    assert result.ok, result.errors
+
+
 def test_a_cte_against_allowed_tables_is_fine():
     result = validate(
         "WITH recent AS (SELECT * FROM purchase_orders WHERE order_date > current_date - 30) "

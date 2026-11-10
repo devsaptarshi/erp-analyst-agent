@@ -95,6 +95,17 @@ def validate(raw_sql: str, max_limit: int = DEFAULT_MAX_LIMIT) -> ValidationResu
             errors.append(f'Table "{name}" is not on the allowlist.')
 
     for func in stmt.find_all(exp.Func):
+        # sqlglot's exp.And / exp.Or (boolean connectors in a WHERE/ON
+        # clause) are, surprisingly, subclasses of exp.Func in this
+        # version — found by an end-to-end test using a real multi-
+        # condition WHERE clause, which every hand-written validator unit
+        # test up to that point happened not to exercise. Without this
+        # exclusion, ordinary `a AND b` in a WHERE clause would be rejected
+        # as an unrecognized "function" — not a security hole, but it
+        # would have made the validator reject almost every real query.
+        if isinstance(func, (exp.And, exp.Or)):
+            continue
+
         # sqlglot gives named/recognized functions (count, sum, ...) a real
         # `.sql_name()`. An unrecognized call like set_config(...) parses
         # as exp.Anonymous, whose `.sql_name()` returns the sentinel
