@@ -13,3 +13,5 @@ class AgentState(TypedDict, total=False):
     model_tier: str  # "cheap" | "strong"
     answer: str
     trace_id: str
+    clarification_question: str | None  # set when the model needs a human answer before it can pick the right SQL
+    clarification_rounds: int

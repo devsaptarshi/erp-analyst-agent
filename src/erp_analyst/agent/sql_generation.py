@@ -25,6 +25,12 @@ from erp_analyst.semantic.loader import SemanticLayer
 class GeneratedSql:
     plan: str
     sql: str
+    # Set instead of (plan, sql) when the question is genuinely ambiguous
+    # in a way that changes which SQL to write — e.g. "revenue" could mean
+    # invoiced or collected, "last quarter" could be calendar or fiscal.
+    # When set, the graph pauses via interrupt() rather than generating
+    # SQL against a guess. See graph.py's clarify_node.
+    clarifying_question: str | None = None
 
 
 class SqlGenerator(Protocol):
@@ -78,7 +84,17 @@ def build_system_prompt(
     return "\n\n".join(parts)
 
 
-def build_user_message(question: str, prior_errors: list[str] | None, prior_sql: str | None) -> str:
+CLARIFY_PREFIX = "CLARIFY:"
+
+
+def build_user_message(question: str, prior_errors: list[str] | None, prior_sql: str | None, allow_clarify: bool = True) -> str:
+    clarify_instruction = (
+        f"\n\nIf the question is genuinely ambiguous in a way that would change which SQL you write "
+        f"(not just a detail you could reasonably assume), reply with exactly one line starting with "
+        f'"{CLARIFY_PREFIX}" followed by your question, and nothing else — no plan, no SQL.'
+        if allow_clarify
+        else ""
+    )
     if prior_errors:
         return (
             f"Question: {question}\n\n"
@@ -89,8 +105,17 @@ def build_user_message(question: str, prior_errors: list[str] | None, prior_sql:
     return (
         f"Question: {question}\n\n"
         "Reply with a one-line plan (which tables/joins you'll use and why), "
-        "then the SQL in a ```sql fenced block. SELECT only."
+        "then the SQL in a ```sql fenced block. SELECT only." + clarify_instruction
     )
+
+
+def _parse_response(text: str) -> GeneratedSql:
+    stripped = text.strip()
+    if stripped.startswith(CLARIFY_PREFIX):
+        return GeneratedSql(plan="", sql="", clarifying_question=stripped[len(CLARIFY_PREFIX) :].strip())
+    sql = _extract_sql(text)
+    plan = text.split("```")[0].strip()
+    return GeneratedSql(plan=plan, sql=sql)
 
 
 def make_sql_generator(
@@ -113,12 +138,13 @@ def make_sql_generator(
         verified_examples = retriever(question) if (cfg.use_verified_queries and retriever) else None
         system_prompt = build_system_prompt(cfg, semantic_layer, verified_examples)
         model = get_model(tier)
-        user_msg = build_user_message(question, prior_errors, prior_sql)
+        # Only offer the clarify option on a FRESH attempt (no prior_errors)
+        # — once we have a concrete, invalid SQL attempt to fix, the model
+        # should fix it, not relitigate whether the question was ambiguous.
+        user_msg = build_user_message(question, prior_errors, prior_sql, allow_clarify=prior_errors is None)
         response = model.invoke([("system", system_prompt), ("user", user_msg)])
         text = response.content if isinstance(response.content, str) else str(response.content)
-        sql = _extract_sql(text)
-        plan = text.split("```")[0].strip()
-        return GeneratedSql(plan=plan, sql=sql)
+        return _parse_response(text)
 
     return generator
 

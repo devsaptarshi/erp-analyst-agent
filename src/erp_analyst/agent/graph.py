@@ -1,25 +1,33 @@
 """The agent's LangGraph state machine.
 
-generate_sql -> validate -(ok)-> execute -> answer
+generate_sql -(ambiguous, round 0)-> clarify -(interrupt, resume)-> generate_sql
+             -(not ambiguous, or already clarified once)-> validate -(ok)-> execute -> answer
                    |-(bad, attempts<2)-> repair -> validate (loop)
                    |-(bad, attempts>=2)-> answer (explains the failure)
 execute -(db error)-> repair (same loop, same attempt budget) -> validate
 execute -(ok)-> answer
 
-Two real exits: a successful answer with rows, or an honest explanation
-after the repair budget (2 attempts, per the build spec) is exhausted —
-never a silent wrong answer and never a raw DB/stack-trace error surfaced
-to the user. The build spec's own "seven steps, three exits" diagram was
-never resolved to concrete node names (see the extracted spec notes) — this
-is a from-scratch, reasonable design satisfying the same intent: plan,
-generate, validate, execute, and a bounded repair loop, never looping
-forever and never executing something that failed validation.
+Three real exits now: a successful answer with rows, an honest
+explanation after the repair budget (2 attempts, per the build spec) is
+exhausted, or (new this week) the graph pausing mid-run via LangGraph's
+native interrupt() to ask a genuinely ambiguous question back to a human
+before ever generating SQL against a guess. Never a silent wrong answer
+and never a raw DB/stack-trace error surfaced to the user. The build
+spec's own "seven steps, three exits" diagram was never resolved to
+concrete node names (see the extracted spec notes) — this is a from-
+scratch, reasonable design satisfying the same intent.
+
+Clarification is capped at one round (MAX_CLARIFY_ROUNDS): if the model is
+still unsure after a human has already answered once, it proceeds to
+generate SQL anyway rather than risking an infinite back-and-forth — a
+bounded budget, same principle as the repair loop.
 """
 from __future__ import annotations
 
 from collections.abc import Callable
 
 from langgraph.graph import END, StateGraph
+from langgraph.types import interrupt
 
 from erp_analyst.agent.sql_generation import GeneratedSql, SqlGenerator, real_sql_generator
 from erp_analyst.agent.state import AgentState
@@ -27,6 +35,7 @@ from erp_analyst.db.executor import ExecutionResult, TenantScopedExecutor
 from erp_analyst.validation.sql_validator import validate
 
 MAX_REPAIR_ATTEMPTS = 2
+MAX_CLARIFY_ROUNDS = 1
 
 ExecutorFactory = Callable[[str], "ExecutorProtocol"]
 
@@ -38,11 +47,39 @@ class ExecutorProtocol:
 def build_graph(
     sql_generator: SqlGenerator = real_sql_generator,
     executor_factory: ExecutorFactory = TenantScopedExecutor,
+    checkpointer=None,
 ):
     def generate_sql_node(state: AgentState) -> dict:
         tier = state.get("model_tier", "cheap")
         generated: GeneratedSql = sql_generator(state["question"], None, None, tier)
-        return {"plan": generated.plan, "sql": generated.sql, "attempts": 0}
+        if generated.clarifying_question:
+            # "sql"/"plan" are set even here (not left unset) so that if
+            # route_after_generate forces a fallthrough to "validate"
+            # anyway (the MAX_CLARIFY_ROUNDS cap hit, with the model still
+            # asking for clarification), validate_node has a real,
+            # if-empty, string to validate instead of a missing key —
+            # found by a test that hit exactly this path.
+            return {"plan": "", "sql": generated.sql, "attempts": 0, "clarification_question": generated.clarifying_question}
+        return {"plan": generated.plan, "sql": generated.sql, "attempts": 0, "clarification_question": None}
+
+    def route_after_generate(state: AgentState) -> str:
+        if state.get("clarification_question") and state.get("clarification_rounds", 0) < MAX_CLARIFY_ROUNDS:
+            return "clarify"
+        return "validate"
+
+    def clarify_node(state: AgentState) -> dict:
+        # Pauses the graph here. The caller resumes with
+        # graph.invoke(Command(resume=<the human's answer>), config=...)
+        # using the SAME thread_id config as the original invoke — that's
+        # what the checkpointer is for: without one, interrupt() has
+        # nowhere to persist this paused state to.
+        answer = interrupt({"question": state["clarification_question"]})
+        combined_question = f"{state['question']}\n\n(Clarification asked: {state['clarification_question']}\nHuman answered: {answer})"
+        return {
+            "question": combined_question,
+            "clarification_question": None,
+            "clarification_rounds": state.get("clarification_rounds", 0) + 1,
+        }
 
     def validate_node(state: AgentState) -> dict:
         result = validate(state["sql"])
@@ -93,16 +130,18 @@ def build_graph(
 
     graph = StateGraph(AgentState)
     graph.add_node("generate_sql", generate_sql_node)
+    graph.add_node("clarify", clarify_node)
     graph.add_node("validate", validate_node)
     graph.add_node("repair", repair_node)
     graph.add_node("execute", execute_node)
     graph.add_node("answer", answer_node)
 
     graph.set_entry_point("generate_sql")
-    graph.add_edge("generate_sql", "validate")
+    graph.add_conditional_edges("generate_sql", route_after_generate, {"clarify": "clarify", "validate": "validate"})
+    graph.add_edge("clarify", "generate_sql")
     graph.add_conditional_edges("validate", route_after_validate, {"execute": "execute", "repair": "repair", "answer": "answer"})
     graph.add_edge("repair", "validate")
     graph.add_conditional_edges("execute", route_after_execute, {"answer": "answer", "repair": "repair"})
     graph.add_edge("answer", END)
 
-    return graph.compile()
+    return graph.compile(checkpointer=checkpointer)

@@ -60,6 +60,40 @@ def test_user_message_with_prior_errors_includes_them_and_the_failed_sql():
     assert "SELECT * FROM pg_shadow" in msg
 
 
+def test_build_user_message_includes_the_clarify_instruction_on_a_fresh_attempt():
+    msg = build_user_message("show me revenue", None, None, allow_clarify=True)
+    assert "CLARIFY:" in msg
+
+
+def test_build_user_message_omits_the_clarify_instruction_during_repair():
+    msg = build_user_message("show me revenue", ["some error"], "SELECT 1", allow_clarify=True)
+    # allow_clarify=True is passed, but prior_errors being set means this
+    # is the repair-prompt branch, which never offers CLARIFY at all.
+    assert "CLARIFY:" not in msg
+
+
+def test_build_user_message_omits_the_clarify_instruction_when_explicitly_disabled():
+    msg = build_user_message("show me revenue", None, None, allow_clarify=False)
+    assert "CLARIFY:" not in msg
+
+
+def test_parse_response_recognizes_a_clarify_reply():
+    from erp_analyst.agent.sql_generation import _parse_response
+
+    result = _parse_response("CLARIFY: Do you mean calendar quarter or fiscal quarter?")
+    assert result.clarifying_question == "Do you mean calendar quarter or fiscal quarter?"
+    assert result.sql == ""
+
+
+def test_parse_response_recognizes_a_normal_plan_and_sql_reply():
+    from erp_analyst.agent.sql_generation import _parse_response
+
+    result = _parse_response("list suppliers\n```sql\nSELECT name FROM suppliers\n```")
+    assert result.clarifying_question is None
+    assert result.sql == "SELECT name FROM suppliers"
+    assert "list suppliers" in result.plan
+
+
 def test_make_sql_generator_calls_the_retriever_with_the_actual_question_each_time():
     """Proves retrieval happens PER CALL (so repair attempts and different
     questions get their own relevant examples), not once at generator-
