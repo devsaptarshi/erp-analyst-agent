@@ -26,15 +26,24 @@ def test_a_custom_semantic_layer_instance_is_used_over_loading_the_default():
     assert "material_yield_pct" not in prompt  # the test layer has no metrics at all
 
 
-def test_verified_examples_are_rendered_into_the_system_prompt_when_present():
-    config = GeneratorConfig(verified_examples=[("how many suppliers", "SELECT count(*) FROM suppliers")])
-    prompt = build_system_prompt(config)
+def test_verified_examples_are_rendered_into_the_system_prompt_when_enabled_and_present():
+    config = GeneratorConfig(use_verified_queries=True)
+    examples = [("how many suppliers", "SELECT count(*) FROM suppliers")]
+    prompt = build_system_prompt(config, verified_examples=examples)
     assert "how many suppliers" in prompt
     assert "SELECT count(*) FROM suppliers" in prompt
 
 
+def test_verified_examples_are_not_rendered_when_the_toggle_is_off_even_if_examples_are_passed():
+    config = GeneratorConfig(use_verified_queries=False)
+    examples = [("how many suppliers", "SELECT count(*) FROM suppliers")]
+    prompt = build_system_prompt(config, verified_examples=examples)
+    assert "previously-verified" not in prompt
+    assert "how many suppliers" not in prompt
+
+
 def test_no_verified_examples_means_no_examples_section():
-    prompt = build_system_prompt(GeneratorConfig(verified_examples=None))
+    prompt = build_system_prompt(GeneratorConfig(use_verified_queries=True), verified_examples=None)
     assert "previously-verified" not in prompt
 
 
@@ -49,3 +58,31 @@ def test_user_message_with_prior_errors_includes_them_and_the_failed_sql():
     assert "pg_shadow" in msg
     assert "rejected" in msg
     assert "SELECT * FROM pg_shadow" in msg
+
+
+def test_make_sql_generator_calls_the_retriever_with_the_actual_question_each_time():
+    """Proves retrieval happens PER CALL (so repair attempts and different
+    questions get their own relevant examples), not once at generator-
+    construction time."""
+    from unittest.mock import patch
+
+    from erp_analyst.agent.sql_generation import make_sql_generator
+
+    calls = []
+
+    def fake_retriever(question):
+        calls.append(question)
+        return [("fake example", "SELECT 1")]
+
+    config = GeneratorConfig(use_verified_queries=True)
+    generator = make_sql_generator(config=config, retriever=fake_retriever)
+
+    class FakeResponse:
+        content = "plan\n```sql\nSELECT 1\n```"
+
+    with patch("erp_analyst.agent.sql_generation.get_model") as mock_get_model:
+        mock_get_model.return_value.invoke.return_value = FakeResponse()
+        generator("first question", None, None, "cheap")
+        generator("second question", None, None, "cheap")
+
+    assert calls == ["first question", "second question"]
