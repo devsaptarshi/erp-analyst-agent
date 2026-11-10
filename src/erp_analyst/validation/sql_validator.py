@@ -33,6 +33,12 @@ ALLOWED_FUNCTIONS = frozenset(
         "array_agg", "string_agg", "percentile_cont", "percentile_disc",
         "rank", "dense_rank", "row_number", "lag", "lead", "sum_filter",
         "stddev", "variance", "generate_series",
+        # sqlglot's own canonical/internal names for functions written
+        # differently in the SQL text — found via real queries failing
+        # validation despite using an allowed, ordinary function. E.g.
+        # `date_trunc(...)` parses to exp.TimestampTrunc, whose
+        # .sql_name() is "TIMESTAMP_TRUNC", not "date_trunc".
+        "timestamp_trunc",
     }
 )
 
@@ -95,15 +101,19 @@ def validate(raw_sql: str, max_limit: int = DEFAULT_MAX_LIMIT) -> ValidationResu
             errors.append(f'Table "{name}" is not on the allowlist.')
 
     for func in stmt.find_all(exp.Func):
-        # sqlglot's exp.And / exp.Or (boolean connectors in a WHERE/ON
-        # clause) are, surprisingly, subclasses of exp.Func in this
-        # version — found by an end-to-end test using a real multi-
-        # condition WHERE clause, which every hand-written validator unit
-        # test up to that point happened not to exercise. Without this
-        # exclusion, ordinary `a AND b` in a WHERE clause would be rejected
-        # as an unrecognized "function" — not a security hole, but it
-        # would have made the validator reject almost every real query.
-        if isinstance(func, (exp.And, exp.Or)):
+        # A handful of ordinary SQL syntax forms — boolean connectors
+        # (AND/OR) and CASE/IF — are, surprisingly, modeled as subclasses
+        # of exp.Func in this sqlglot version, even though nobody writes
+        # them as `name(args)` function calls. Each one here was found by
+        # a REAL query failing validation for no good reason (a multi-
+        # condition WHERE clause; a CASE expression classifying a date
+        # into a fiscal quarter) — not reasoned out in advance. Without
+        # this exclusion the validator would reject almost any real query
+        # using ordinary boolean logic or conditional expressions. Not a
+        # security hole either way — the failure mode is "valid SQL
+        # wrongly rejected," never "dangerous SQL wrongly allowed" — but
+        # it would make the validator useless for real questions.
+        if isinstance(func, (exp.And, exp.Or, exp.Case, exp.If)):
             continue
 
         # sqlglot gives named/recognized functions (count, sum, ...) a real

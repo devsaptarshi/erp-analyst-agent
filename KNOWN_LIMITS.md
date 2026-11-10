@@ -16,6 +16,16 @@
 - **No real login system.** Tenant switching in the demo is not
   authentication — see the build spec's explicit scope cut. A real
   deployment needs its own session/auth layer in front of this.
+- **The verified-queries store uses a hashing-trick embedder, not a real
+  embedding model.** No embedding-provider API key (Voyage, OpenAI, etc.)
+  was available while building this — see `src/erp_analyst/semantic/embeddings.py`
+  for the full rationale and the exact technique (hashed character
+  trigrams, L2-normalized). It's a real, testable retrieval signal — the
+  retrieval-ranking tests prove it actually orders by similarity — but
+  meaningfully weaker than a trained embedding model would be at telling
+  apart two questions that mean the same thing but share few words. Swap
+  `hashing_trick_embedder` for a real provider's client before trusting
+  retrieval quality beyond what the tests directly assert.
 - **`real_sql_generator` (the actual model-calling path) is untested
   against a live model.** No `ANTHROPIC_API_KEY` was available while
   building this — see `gatekeep-mcp`'s layer-2 eval for the same honest

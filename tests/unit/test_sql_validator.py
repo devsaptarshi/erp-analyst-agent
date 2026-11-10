@@ -136,6 +136,23 @@ def test_a_where_clause_with_multiple_and_or_conditions_is_not_mistaken_for_an_u
     assert result.ok, result.errors
 
 
+def test_date_trunc_is_allowed_despite_sqlglot_renaming_it_internally():
+    # Regression test: date_trunc(...) parses to exp.TimestampTrunc, whose
+    # .sql_name() is "TIMESTAMP_TRUNC", not "date_trunc" — found via a
+    # real seeded verified-query example failing validation.
+    result = validate("SELECT date_trunc('month', order_date) FROM purchase_orders")
+    assert result.ok, result.errors
+
+
+def test_a_case_expression_is_not_mistaken_for_an_unknown_function():
+    # Regression test: exp.Case/exp.If are also exp.Func subclasses —
+    # found the same way as the AND/OR case above.
+    result = validate(
+        "SELECT CASE WHEN extract(month FROM order_date) IN (4,5,6) THEN 'Q1' ELSE 'other' END FROM purchase_orders"
+    )
+    assert result.ok, result.errors
+
+
 def test_a_cte_against_allowed_tables_is_fine():
     result = validate(
         "WITH recent AS (SELECT * FROM purchase_orders WHERE order_date > current_date - 30) "
