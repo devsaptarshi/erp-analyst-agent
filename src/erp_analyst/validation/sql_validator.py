@@ -69,7 +69,7 @@ def validate(raw_sql: str, max_limit: int = DEFAULT_MAX_LIMIT) -> ValidationResu
 
     try:
         statements = [s for s in sqlglot.parse(raw_sql, dialect=DIALECT) if s is not None]
-    except Exception as exc:  # sqlglot raises ParseError and others
+    except Exception as exc:  # noqa: BLE001 — sqlglot raises several undocumented exception types on malformed SQL; this validator must never crash, only reject
         return ValidationResult(ok=False, errors=[f"SQL failed to parse: {exc}"])
 
     if len(statements) == 0:

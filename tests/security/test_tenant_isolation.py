@@ -123,20 +123,18 @@ def test_direct_rls_cannot_be_overridden_by_a_crafted_where_clause(analyst_conn,
 
 def test_analyst_ro_cannot_write(analyst_conn, tenant_ids):
     set_tenant(analyst_conn, tenant_ids["Acme Leather Co"])
-    with pytest.raises(Exception, match="permission denied|read-only"):
-        with analyst_conn.cursor() as cur:
-            cur.execute(
-                "INSERT INTO suppliers (tenant_id, name) VALUES (%s, %s)",
-                (tenant_ids["Acme Leather Co"], "Should Not Exist"),
-            )
+    with pytest.raises(Exception, match="permission denied|read-only"), analyst_conn.cursor() as cur:
+        cur.execute(
+            "INSERT INTO suppliers (tenant_id, name) VALUES (%s, %s)",
+            (tenant_ids["Acme Leather Co"], "Should Not Exist"),
+        )
 
 
 def test_analyst_ro_cannot_bypass_rls_even_with_superuser_style_tricks(analyst_conn, tenant_ids):
     set_tenant(analyst_conn, tenant_ids["Acme Leather Co"])
-    with pytest.raises(Exception):
-        with analyst_conn.cursor() as cur:
-            # analyst_ro has no rights to alter its own RLS exemption
-            cur.execute("ALTER TABLE suppliers NO FORCE ROW LEVEL SECURITY")
+    with pytest.raises(Exception), analyst_conn.cursor() as cur:  # noqa: B017 — any psycopg.Error here is a pass; the specific one doesn't matter, only that it's denied
+        # analyst_ro has no rights to alter its own RLS exemption
+        cur.execute("ALTER TABLE suppliers NO FORCE ROW LEVEL SECURITY")
 
 
 # ----------------------------------------------------------------------------

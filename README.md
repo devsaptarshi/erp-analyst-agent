@@ -46,7 +46,19 @@ See [SECURITY.md](./SECURITY.md) for the full threat model and
 
 ## Status
 
-Week 1 in progress — see the build spec for the three-week plan.
+Week 1 done — see the build spec for the three-week plan. **62/62 tests
+pass**, including the project's own flagship question ("which supplier's
+hides gave the worst yield last quarter?") answered correctly end to end
+through the real LangGraph graph, real validator, and real RLS-enforced
+Postgres connection, and a 1,000-request connection-pool alternation test
+with zero cross-tenant leaks. See [LESSONS.md](./LESSONS.md) for two real
+bugs the tests caught (a silently-broken dangerous-function blocklist, and
+ordinary `WHERE a AND b` being misclassified as an unrecognized function)
+that a code read alone didn't surface.
+
+The model-calling path itself (`real_sql_generator`) is untested against
+a live model — no `ANTHROPIC_API_KEY` was available while building this.
+See [KNOWN_LIMITS.md](./KNOWN_LIMITS.md).
 
 ## Quickstart (dev)
 

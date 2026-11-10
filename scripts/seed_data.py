@@ -18,7 +18,7 @@ import psycopg
 from faker import Faker
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-from erp_analyst.config import settings  # noqa: E402
+from erp_analyst.config import settings
 
 SEED = 20261110
 random.seed(SEED)

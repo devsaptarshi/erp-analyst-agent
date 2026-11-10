@@ -5,7 +5,7 @@ import psycopg
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-from erp_analyst.config import settings  # noqa: E402
+from erp_analyst.config import settings
 
 
 @pytest.fixture(scope="session")

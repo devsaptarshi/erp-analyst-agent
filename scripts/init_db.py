@@ -11,7 +11,7 @@ import psycopg
 from psycopg import sql
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-from erp_analyst.config import settings  # noqa: E402
+from erp_analyst.config import settings
 
 SCHEMA_SQL = (Path(__file__).resolve().parent.parent / "src/erp_analyst/db/schema.sql").read_text()
 RLS_SQL = (Path(__file__).resolve().parent.parent / "src/erp_analyst/db/rls.sql").read_text()

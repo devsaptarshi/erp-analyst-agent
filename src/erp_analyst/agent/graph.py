@@ -17,12 +17,12 @@ forever and never executing something that failed validation.
 """
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 from langgraph.graph import END, StateGraph
 
-from erp_analyst.agent.state import AgentState
 from erp_analyst.agent.sql_generation import GeneratedSql, SqlGenerator, real_sql_generator
+from erp_analyst.agent.state import AgentState
 from erp_analyst.db.executor import ExecutionResult, TenantScopedExecutor
 from erp_analyst.validation.sql_validator import validate
 

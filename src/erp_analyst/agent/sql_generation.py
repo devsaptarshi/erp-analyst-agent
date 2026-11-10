@@ -10,8 +10,8 @@ import re
 from dataclasses import dataclass
 from typing import Protocol
 
-from erp_analyst.agent.schema_context import SCHEMA_CONTEXT
 from erp_analyst.agent.models import get_model
+from erp_analyst.agent.schema_context import SCHEMA_CONTEXT
 
 
 @dataclass

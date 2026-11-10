@@ -16,3 +16,25 @@
 - **No real login system.** Tenant switching in the demo is not
   authentication — see the build spec's explicit scope cut. A real
   deployment needs its own session/auth layer in front of this.
+- **`real_sql_generator` (the actual model-calling path) is untested
+  against a live model.** No `ANTHROPIC_API_KEY` was available while
+  building this — see `gatekeep-mcp`'s layer-2 eval for the same honest
+  gap in the sibling project. Every control-flow test
+  (`tests/unit/test_agent_graph.py`, `tests/security/test_agent_end_to_end.py`)
+  drives the real LangGraph graph, the real validator, and (in the
+  end-to-end tests) the real RLS-enforced Postgres connection, with only
+  the model call itself faked. That proves the graph's routing and the
+  security boundary; it does not prove a real model reliably produces
+  parseable `​```sql` blocks, follows the schema correctly, or responds
+  usefully to a repair prompt. Run `scripts/seed_data.py` then try a few
+  real questions against `real_sql_generator` before trusting this beyond
+  the faked tests.
+- **No connection pooling in `TenantScopedExecutor` yet** — one new
+  connection per request (see its docstring). Correct and safe, just not
+  how a real deployment would want to handle load; the pool-alternation
+  security test already proves the SET LOCAL-per-transaction pattern is
+  pool-safe for whenever pooling is added.
+- **The cartesian-join check rejects table-less `SELECT`s with a literal
+  comma by coincidence of how sqlglot models commas** — only tested
+  against real `FROM a, b` patterns, not exhaustively fuzzed against every
+  way sqlglot might represent an implicit join.

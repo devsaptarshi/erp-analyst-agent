@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: erp_analyst
+          POSTGRES_USER: erp_admin
+          POSTGRES_PASSWORD: ci-only-password
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U erp_admin -d erp_analyst"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://erp_admin:ci-only-password@127.0.0.1:5433/erp_analyst
+      ANALYST_DATABASE_URL: postgresql://analyst_ro:ci-only-analyst-password@127.0.0.1:5433/erp_analyst
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - run: uv sync
+      - run: uv run python scripts/init_db.py
+      - run: uv run python scripts/seed_data.py
+      - run: uv run ruff check .
+      - run: uv run pytest -v
